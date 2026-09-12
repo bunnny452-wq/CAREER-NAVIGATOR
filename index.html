@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Advisor AI — Your AI-powered path to the future</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+tailwind.config={
+  theme:{
+    extend:{
+      fontFamily:{sans:['Inter','sans-serif'], display:['Space Grotesk','sans-serif'], mono:['JetBrains Mono','monospace']},
+      colors:{
+        navy:{900:'#070A14',800:'#0B1020',700:'#121A33',600:'#1A2442'},
+        accent:{blue:'#3B82F6', purple:'#8B5CF6', cyan:'#06B6D4', pink:'#EC4899'}
+      }
+    }
+  }
+}
+</script>
+<style>
+*{scroll-behavior:smooth}
+body{background:#070A14;color:#fff;overflow-x:hidden}
+.bg-grid{
+  background-image:
+    linear-gradient(rgba(139,92,246,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,0.06) 1px, transparent 1px);
+  background-size:48px 48px;
+}
+.glass{
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.07);
+}
+.glass-strong{
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,0.10);
+}
+.gradient-text{
+  background:linear-gradient(90deg,#60A5FA 0%,#A78BFA 50%,#F472B6 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.gradient-border{position:relative}
+.gradient-border::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+  background:linear-gradient(135deg,rgba(59,130,246,0.5),rgba(139,92,246,0.5));
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
+}
+.glow-blue{box-shadow:0 0 40px rgba(59,130,246,0.25),0 0 80px rgba(139,92,246,0.15)}
+.glow-card:hover{box-shadow:0 8px 40px rgba(99,102,241,0.18), 0 0 0 1px rgba(139,92,246,0.2)}
+.progress-ring{transform:rotate(-90deg)}
+.custom-scroll::-webkit-scrollbar{width:5px;height:5px}
+.custom-scroll::-webkit-scrollbar-thumb{background:rgba(139,92,246,0.4);border-radius:999px}
+.custom-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,0.04)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulseGlow{0%,100%{opacity:0.6}50%{opacity:1}}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);transform:translateX(-100%);animation:shimmer 2.5s infinite}
+.range-slider::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#8B5CF6);border:2px solid #fff;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+</style>
+</head>
+<body class="font-sans antialiased">
+
+<!-- NAV LANDING -->
+<nav id="landingNav" class="fixed top-0 w-full z-50 glass border-b border-white/[0.06]">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 h-[64px] flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center glow-blue">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-4z"/><circle cx="12" cy="11" r="3"/><path d="M12 14v4"/></svg>
+      </div>
+      <div>
+        <div class="font-display font-bold text-[15px] leading-none tracking-tight">Career Advisor <span class="gradient-text">AI</span></div>
+        <div class="text-[10px] tracking-[0.14em] text-white/50 font-medium">YOUR AI MENTOR</div>
+      </div>
+    </div>
+    <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+      <a href="#features" class="hover:text-white transition">Features</a>
+      <a href="#how" class="hover:text-white transition">How it works</a>
+      <button onclick="openOnboarding()" class="text-white/90 hover:text-white">Sign in</button>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="openOnboarding()" class="hidden sm:inline-flex px-5 py-2.5 rounded-full bg-white text-[#070A14] text-sm font-semibold hover:bg-white/90 transition">Start Journey →</button>
+      <button onclick="toggleMobileMenu()" class="md:hidden w-9 h-9 rounded-xl glass flex items-center justify-center"><i data-lucide="menu" class="w-4 h-4"></i></button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 bg-[#0B1020] px-6 py-4 space-y-3">
+    <a href="#features" class="block text-sm text-white/70">Features</a>
+    <button onclick="openOnboarding()" class="w-full mt-2 py-3 rounded-full bg-white text-black font-semibold text-sm">Start Your Career Journey</button>
+  </div>
+</nav>
+
+<!-- LANDING VIEW -->
+<div id="landingView">
+  <!-- HERO -->
+  <section class="relative pt-[96px] pb-12 lg:pb-20 overflow-hidden bg-grid">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#070A14] pointer-events-none"></div>
+    <div class="absolute top-20 right-[10%] w-[520px] h-[520px] bg-violet-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="absolute top-32 left-[5%] w-[420px] h-[420px] bg-blue-500/15 blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-8 items-center">
+        <!-- left -->
+        <div class="relative">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-white/80">AI-Powered • Trusted by 12,000+ Students</span>
+            <span class="hidden sm:inline-flex ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px] tracking-widest">NEW • GPT-4o</span>
+          </div>
+          <h1 class="font-display font-bold leading-[0.9] mt-6">
+            <span class="block text-[42px] sm:text-[54px] lg:text-[64px] tracking-[-0.04em]">AI CAREER</span>
+            <span class="block text-[42px] sm:text-[54px] lg:text-[64px] tracking-[-0.04em] gradient-text">ADVISOR</span>
+          </h1>
+          <p class="mt-3 font-display text-[22px] sm:text-[26px] font-semibold text-white leading-tight">Your Personal AI Career Mentor</p>
+          <p class="mt-4 text-[15px] leading-6 text-white/60 max-w-[560px]">Discover the right career path, build the skills you need, create powerful projects, and prepare for your future career — with personalized AI guidance.</p>
+          <div class="flex flex-wrap gap-3 mt-8">
+            <button onclick="openOnboarding()" class="px-7 py-3.5 rounded-full bg-gradient-to-r from-blue-500 to-violet-600 font-semibold text-sm glow-blue hover:opacity-90 transition flex items-center gap-2">Start Your Career Journey <span>→</span></button>
+            <a href="#features" class="px-7 py-3.5 rounded-full glass font-semibold text-sm hover:bg-white/[0.08] transition flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> Explore Features</a>
+          </div>
+          <div class="flex items-center gap-6 mt-8 text-xs text-white/50">
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> No credit card</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> 2-min setup</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-violet-400"></span> Free forever</span>
+          </div>
+          <!-- stats bar -->
+          <div class="grid grid-cols-3 gap-3 mt-10 max-w-[520px]">
+            <div class="glass rounded-2xl px-4 py-3.5">
+              <div class="text-xl font-bold">94%</div><div class="text-[11px] tracking-widest text-white/50">MATCH ACCURACY</div>
+            </div>
+            <div class="glass rounded-2xl px-4 py-3.5">
+              <div class="text-xl font-bold">50k+</div><div class="text-[11px] tracking-widest text-white/50">ROADMAPS BUILT</div>
+            </div>
+            <div class="glass rounded-2xl px-4 py-3.5">
+              <div class="text-xl font-bold">4.9/5</div><div class="text-[11px] tracking-widest text-white/50">STUDENT RATING</div>
+            </div>
+          </div>
+        </div>
+        <!-- right visual -->
+        <div class="relative lg:h-[560px] flex items-center justify-center">
+          <!-- orb -->
+          <div class="relative w-[340px] sm:w-[420px] h-[340px] sm:h-[420px]">
+            <div class="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/30 via-violet-600/30 to-fuchsia-500/20 blur-2xl"></div>
+            <div class="absolute inset-[18px] rounded-full border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl"></div>
+            <div class="absolute inset-[36px] rounded-full border border-white/10 overflow-hidden flex items-center justify-center" style="background:radial-gradient(circle at 30% 30%, rgba(99,102,241,0.5), rgba(15,23,42,0.9))">
+              <div class="absolute inset-0 bg-grid opacity-30"></div>
+              <!-- circuit lines -->
+              <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 300 300"><circle cx="150" cy="150" r="90" fill="none" stroke="rgba(99,102,241,0.5)" stroke-width="1" stroke-dasharray="6 6"/><circle cx="150" cy="150" r="60" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><g stroke="rgba(99,102,241,0.6)" stroke-width="1"><line x1="150" y1="30" x2="150" y2="60"/><line x1="150" y1="240" x2="150" y2="270"/><line x1="30" y1="150" x2="60" y2="150"/><line x1="240" y1="150" x2="270" y2="150"/></g><circle cx="150" cy="30" r="4" fill="#60A5FA"/><circle cx="150" cy="270" r="4" fill="#A78BFA"/><circle cx="30" cy="150" r="4" fill="#60A5FA"/><circle cx="270" cy="150" r="4" fill="#F472B6"/></svg>
+              <div class="relative w-28 h-28 rounded-3xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center shadow-2xl" style="animation:float 4s ease-in-out infinite">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 3v6M15 3v6M9 15v6M15 15v6M3 9h6M3 15h6M15 9h6M15 15h6"/></svg>
+              </div>
+              <div class="absolute bottom-6 left-1/2 -translate-x-1/2 glass rounded-full px-3 py-1.5 text-[11px] font-medium flex items-center gap-2 whitespace-nowrap">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> AI Analyzing Profile...
+              </div>
+            </div>
+            <!-- floating cards -->
+            <div class="absolute -top-2 -right-2 glass-strong rounded-2xl p-3 w-[148px] shadow-xl" style="animation:float 3.5s ease-in-out infinite">
+              <div class="flex items-center gap-2 text-[11px] font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> Match Found</div>
+              <div class="text-xs font-bold mt-1">AI/ML Engineer</div>
+              <div class="text-[11px] text-white/50">88% fit • High demand</div>
+              <div class="mt-2 h-1.5 rounded-full bg-white/10 overflow-hidden"><div class="h-full w-[88%] bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full"></div></div>
+            </div>
+            <div class="absolute -bottom-4 -left-4 glass-strong rounded-2xl p-3 w-[170px] shadow-xl" style="animation:float 4.2s ease-in-out infinite 0.6s">
+              <div class="text-[11px] font-semibold text-white/70">Next Best Action</div>
+              <div class="text-xs font-bold mt-1 leading-tight">Complete ML Fundamentals → Build Classifier</div>
+              <button class="mt-2 w-full py-1.5 rounded-full bg-white text-black text-xs font-semibold">Start Task</button>
+            </div>
+            <div class="absolute top-1/2 -right-6 -translate-y-1/2 glass rounded-xl px-3 py-2 flex items-center gap-2 shadow-xl hidden sm:flex">
+              <img src="https://i.pravatar.cc/100?img=5" class="w-7 h-7 rounded-full" alt=""/>
+              <div class="text-xs"><div class="font-semibold leading-none">Ananya S.</div><div class="text-[11px] text-white/50">Got internship at Microsoft</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- logos -->
+      <div class="mt-12 flex flex-wrap items-center gap-6 text-xs tracking-widest text-white/30">
+        <span>TRUSTED BY STUDENTS FROM</span>
+        <span class="h-4 w-px bg-white/10"></span>
+        <span class="font-semibold text-white/60">IIT BOMBAY</span>
+        <span class="font-semibold text-white/60">BITS PILANI</span>
+        <span class="font-semibold text-white/60">NIT TRICHY</span>
+        <span class="font-semibold text-white/60">VIT</span>
+        <span class="font-semibold text-white/60">SRM</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center max-w-2xl mx-auto">
+      <div class="inline-flex px-3 py-1 rounded-full glass text-[11px] tracking-widest font-semibold text-violet-300">PLATFORM FEATURES</div>
+      <h2 class="font-display text-[28px] sm:text-[36px] font-bold mt-3 leading-tight">Everything you need to <span class="gradient-text">launch your career</span></h2>
+      <p class="text-sm text-white/50 mt-3">From discovery to interview — your AI mentor guides every step with personalized, actionable guidance.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+      <!-- 8 feature cards -->
+      <div class="glass rounded-[20px] p-5 glow-card transition group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M8 11h6"/><path d="M11 8v6"/></svg></div>
+        <h3 class="font-semibold mt-4 text-[15px]">Career Discovery</h3>
+        <p class="text-[13px] leading-5 text-white/55 mt-1.5">Find career paths that match your interests, skills, education and goals with 94% accuracy.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-xs font-semibold text-blue-400">Explore <span>→</span></div>
+      </div>
+      <div class="glass rounded-[20px] p-5 glow-card transition">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3 class="font-semibold mt-4 text-[15px]">Skill Gap Analysis</h3>
+        <p class="text-[13px] leading-5 text-white/55 mt-1.5">Identify missing skills and understand exactly what to learn next with priority levels.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-xs font-semibold text-violet-400">Analyze <span>→</span></div>
+      </div>
+      <div class="glass rounded-[20px] p-5 glow-card transition">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 6-8"/></svg></div>
+        <h3 class="font-semibold mt-4 text-[15px]">Personalized Roadmap</h3>
+        <p class="text-[13px] leading-5 text-white/55 mt-1.5">Step-by-step 6-month learning plan that adapts as you progress and complete tasks.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-xs font-semibold text-fuchsia-400">View roadmap <span>→</span></div>
+      </div>
+      <div class="glass rounded-[20px] p-5 glow-card transition">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+        <h3 class="font-semibold mt-4 text-[15px]">Project Recommendations</h3>
+        <p class="text-[13px] leading-5 text-white/55 mt-1.5">Curated portfolio-worthy projects matched to your target career and skill level.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-xs font-semibold text-amber-400">Browse <span>→</span></div>
+      </div>
+      <div class="glass rounded-[20px] p-5 glow-card transition">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 19l7-7a2 2 0 0 0 0-3l-2-2a2 2 0 0 0-3 0l-7 7v5h5z"/><path d="M12 19l-2 2"/><path d="M5 12l2-2"/></svg></div>
+        <h3 class="font-semibold mt-4 text-[15px]">Portfolio Builder</h3>
+        <p class="text-[13px] leading-5 text-white/55 mt-1.5">Build a stunning GitHub & personal portfolio with AI-polished content.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-xs font-semibold text-emerald-400">Build <span>→</span></div>
+      </div>
+      <div class="glass rounded-[20px] p-5 glow-card transition">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h3 class="font-semibold mt-4 text-[15px]">Resume Builder</h3>
+        <p class="text-[13px] leading-5 text-white/55 mt-1.5">ATS-friendly resume crafted only from your real information — never fake data.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-xs font-semibold text-blue-400">Generate <span>→</span></div>
+      </div>
+      <div class="glass rounded-[20px] p-5 glow-card transition">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg></div>
+        <h3 class="font-semibold mt-4 text-[15px]">Internship Preparation</h3>
+        <p class="text-[13px] leading-5 text-white/55 mt-1.5">Track readiness across resume, portfolio, skills and get your next best action.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-xs font-semibold text-cyan-400">Check readiness <span>→</span></div>
+      </div>
+      <div class="glass rounded-[20px] p-5 glow-card transition">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <h3 class="font-semibold mt-4 text-[15px]">Interview Coach</h3>
+        <p class="text-[13px] leading-5 text-white/55 mt-1.5">Practice technical, HR and project interviews with instant AI feedback.</p>
+        <div class="mt-4 flex items-center gap-1.5 text-xs font-semibold text-pink-400">Practice <span>→</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="glass rounded-[28px] p-6 sm:p-8 lg:p-10 flex flex-col lg:flex-row gap-8 items-center">
+      <div class="flex-1">
+        <div class="text-[11px] tracking-widest font-bold text-violet-300">HOW IT WORKS</div>
+        <h3 class="font-display text-[26px] font-bold mt-2">Student Profile → AI Analysis → Your Future</h3>
+        <div class="mt-6 grid sm:grid-cols-3 gap-4">
+          <div class="flex gap-3"><div class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-sm font-bold shrink-0">1</div><div><div class="text-sm font-semibold">Tell us about you</div><div class="text-xs text-white/50 leading-4 mt-1">Education, skills, interests and goals in 2 minutes</div></div></div>
+          <div class="flex gap-3"><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold shrink-0">2</div><div><div class="text-sm font-semibold">AI analyzes fit</div><div class="text-xs text-white/50 leading-4 mt-1">We match you to careers, gaps and projects</div></div></div>
+          <div class="flex gap-3"><div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold shrink-0">3</div><div><div class="text-sm font-semibold">Execute roadmap</div><div class="text-xs text-white/50 leading-4 mt-1">Build portfolio, resume & ace interviews</div></div></div>
+        </div>
+      </div>
+      <div class="w-full lg:w-[380px] glass-strong rounded-2xl p-5">
+        <div class="flex items-center justify-between"><span class="text-sm font-semibold">Your progress</span><span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-medium">On track</span></div>
+        <div class="mt-4 space-y-3">
+          <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center">🎯</div><div class="flex-1"><div class="text-xs font-semibold">Career match</div><div class="h-1.5 bg-white/10 rounded-full mt-1"><div class="h-full w-[88%] bg-gradient-to-r from-blue-500 to-violet-500 rounded-full"></div></div></div><span class="text-xs font-bold">88%</span></div>
+          <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-violet-500/20 flex items-center justify-center">📚</div><div class="flex-1"><div class="text-xs font-semibold">Roadmap</div><div class="h-1.5 bg-white/10 rounded-full mt-1"><div class="h-full w-[42%] bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full"></div></div></div><span class="text-xs font-bold">42%</span></div>
+          <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center">💼</div><div class="flex-1"><div class="text-xs font-semibold">Internship ready</div><div class="h-1.5 bg-white/10 rounded-full mt-1"><div class="h-full w-[68%] bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full"></div></div></div><span class="text-xs font-bold">68%</span></div>
+        </div>
+        <button onclick="openOnboarding()" class="mt-5 w-full py-3 rounded-full bg-white text-black font-semibold text-sm">Get your personalized plan →</button>
+      </div>
+    </div>
+    <div class="text-center text-xs text-white/30 mt-8">© 2025 Career Advisor AI • Your AI-powered path to the future. • Not a guarantee of placement — personalized guidance only.</div>
+  </section>
+</div>
+
+<!-- ONBOARDING MODAL -->
+<div id="onboardingModal" class="fixed inset-0 z-[100] hidden">
+  <div class="absolute inset-0 bg-[#070A14]/80 backdrop-blur-xl" onclick="closeOnboarding()"></div>
+  <div class="absolute inset-0 sm:inset-4 lg:inset-8 glass-strong rounded-none sm:rounded-[24px] overflow-hidden flex flex-col max-w-[1120px] mx-auto my-0 sm:my-0 shadow-2xl">
+    <!-- header -->
+    <div class="flex items-center justify-between px-6 sm:px-8 h-[64px] border-b border-white/10 shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-4z"/></svg></div>
+        <span class="font-display font-bold text-sm">Career Advisor AI</span>
+        <span class="hidden sm:inline text-xs px-2 py-1 rounded-full bg-white/10">Profile Setup</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-white/50 hidden sm:inline">Step <span id="stepNum">1</span> of 6</span>
+        <button onclick="closeOnboarding()" class="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      </div>
+    </div>
+    <!-- progress -->
+    <div class="px-6 sm:px-8 py-4 shrink-0">
+      <div class="flex gap-2">
+        <div id="prog1" class="h-1.5 flex-1 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 transition"></div>
+        <div id="prog2" class="h-1.5 flex-1 rounded-full bg-white/10 transition"></div>
+        <div id="prog3" class="h-1.5 flex-1 rounded-full bg-white/10 transition"></div>
+        <div id="prog4" class="h-1.5 flex-1 rounded-full bg-white/10 transition"></div>
+        <div id="prog5" class="h-1.5 flex-1 rounded-full bg-white/10 transition"></div>
+        <div id="prog6" class="h-1.5 flex-1 rounded-full bg-white/10 transition"></div>
+      </div>
+      <div class="flex justify-between text-[10px] tracking-widest text-white/40 mt-2 font-medium">
+        <span>EDUCATION</span><span>INTERESTS</span><span>SKILLS</span><span>STRENGTHS</span><span>GOAL</span><span>EXPERIENCE</span>
+      </div>
+    </div>
+    <!-- content -->
+    <div class="flex-1 overflow-y-auto custom-scroll px-6 sm:px-8 pb-6">
+      <!-- Step 1 -->
+      <div id="step1" class="step-panel">
+        <h2 class="font-display text-2xl font-bold">Tell us about your education</h2>
+        <p class="text-sm text-white/50 mt-1">This helps us personalize career paths and roadmaps.</p>
+        <div class="grid sm:grid-cols-2 gap-4 mt-6">
+          <label class="space-y-1.5"><span class="text-xs font-semibold text-white/70">Full Name *</span><input id="inName" placeholder="e.g., Aarav Mehta" class="w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"/></label>
+          <label class="space-y-1.5"><span class="text-xs font-semibold text-white/70">College / University *</span><input id="inCollege" placeholder="e.g., VIT Vellore" class="w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"/></label>
+          <label class="space-y-1.5"><span class="text-xs font-semibold text-white/70">Course *</span><select id="inCourse" class="w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm focus:outline-none focus:border-violet-500/50"><option value="" class="bg-[#0B1020]">Select course</option><option class="bg-[#0B1020]">B.Tech</option><option class="bg-[#0B1020]">B.E.</option><option class="bg-[#0B1020]">B.Sc</option><option class="bg-[#0B1020]">BCA</option><option class="bg-[#0B1020]">MCA</option><option class="bg-[#0B1020]">M.Tech</option><option class="bg-[#0B1020]">Diploma</option></select></label>
+          <label class="space-y-1.5"><span class="text-xs font-semibold text-white/70">Branch / Specialization *</span><input id="inBranch" placeholder="e.g., Computer Science" class="w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"/></label>
+          <label class="space-y-1.5"><span class="text-xs font-semibold text-white/70">Year of Study *</span><select id="inYear" class="w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm focus:outline-none focus:border-violet-500/50"><option value="" class="bg-[#0B1020]">Select year</option><option class="bg-[#0B1020]">1st Year</option><option class="bg-[#0B1020]">2nd Year</option><option class="bg-[#0B1020]">3rd Year</option><option class="bg-[#0B1020]">4th Year</option><option class="bg-[#0B1020]">Final Year</option></select></label>
+          <label class="space-y-1.5"><span class="text-xs font-semibold text-white/70">Graduation Year *</span><select id="inGrad" class="w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm focus:outline-none focus:border-violet-500/50"><option class="bg-[#0B1020]">2026</option><option class="bg-[#0B1020]">2027</option><option class="bg-[#0B1020]">2028</option><option class="bg-[#0B1020]">2029</option></select></label>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div id="step2" class="step-panel hidden">
+        <h2 class="font-display text-2xl font-bold">What excites you?</h2>
+        <p class="text-sm text-white/50 mt-1">Select all that interest you — we’ll match careers accordingly. Add custom ones too.</p>
+        <div id="interestGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-6"></div>
+        <div class="mt-4 flex gap-2">
+          <input id="customInterest" placeholder="Add custom interest and press Enter" class="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"/>
+          <button onclick="addCustomInterest()" class="px-5 py-3 rounded-xl bg-white text-black text-sm font-semibold">Add</button>
+        </div>
+        <div id="selectedInterests" class="flex flex-wrap gap-2 mt-4"></div>
+      </div>
+      <!-- Step 3 -->
+      <div id="step3" class="step-panel hidden">
+        <h2 class="font-display text-2xl font-bold">Your current skills</h2>
+        <p class="text-sm text-white/50 mt-1">Add technical & soft skills. You can adjust level afterwards.</p>
+        <div class="mt-6 flex gap-2">
+          <input id="skillInput" placeholder="Type a skill and press Enter (e.g., Python, Communication)" class="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"/>
+          <button onclick="addSkill()" class="px-5 py-3 rounded-xl bg-white text-black text-sm font-semibold">Add skill</button>
+        </div>
+        <div id="skillsList" class="mt-5 space-y-3"></div>
+        <div class="mt-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200">💡 Tip: Don’t worry if you have few skills — we’ll build a plan from wherever you are.</div>
+      </div>
+      <!-- Step 4 -->
+      <div id="step4" class="step-panel hidden">
+        <h2 class="font-display text-2xl font-bold">What are you good at?</h2>
+        <p class="text-sm text-white/50 mt-1">Your strengths help us recommend roles where you’ll thrive.</p>
+        <div class="mt-6 flex gap-2">
+          <input id="strengthInput" placeholder="e.g., Problem Solving, Team Leadership" class="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"/>
+          <button onclick="addStrength()" class="px-5 py-3 rounded-xl bg-white text-black text-sm font-semibold">Add</button>
+        </div>
+        <div id="strengthsList" class="flex flex-wrap gap-2 mt-4"></div>
+        <div class="mt-6">
+          <div class="text-xs font-semibold text-white/70 mb-2">Quick picks:</div>
+          <div id="strengthQuick" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+      <!-- Step 5 -->
+      <div id="step5" class="step-panel hidden">
+        <h2 class="font-display text-2xl font-bold">What’s your career goal?</h2>
+        <p class="text-sm text-white/50 mt-1">It’s okay if you’re still exploring — we’ll help you decide.</p>
+        <div class="grid gap-3 mt-6">
+          <label class="flex items-start gap-4 p-4 rounded-2xl border-2 cursor-pointer transition" id="goalCard1"><input type="radio" name="goalType" value="know" class="mt-1" checked/><div class="flex-1"><div class="text-sm font-semibold">I know my career 🎯</div><div class="text-xs text-white/50">I have a clear target role</div><input id="goalTextKnow" placeholder="e.g., AI/ML Engineer, Product Designer" class="mt-3 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30"/></div></label>
+          <label class="flex items-start gap-4 p-4 rounded-2xl border-2 border-white/10 cursor-pointer" id="goalCard2"><input type="radio" name="goalType" value="exploring"/><div><div class="text-sm font-semibold">I’m exploring options 🔍</div><div class="text-xs text-white/50">I have a few ideas but need clarity</div></div></label>
+          <label class="flex items-start gap-4 p-4 rounded-2xl border-2 border-white/10 cursor-pointer" id="goalCard3"><input type="radio" name="goalType" value="unsure"/><div><div class="text-sm font-semibold">I’m not sure yet 💭</div><div class="text-xs text-white/50">Help me discover what fits me best</div></div></label>
+        </div>
+      </div>
+      <!-- Step 6 -->
+      <div id="step6" class="step-panel hidden">
+        <h2 class="font-display text-2xl font-bold">Your experience so far</h2>
+        <p class="text-sm text-white/50 mt-1">Optional — leave blank if you’re just starting out.</p>
+        <div class="space-y-5 mt-6">
+          <div><label class="text-xs font-semibold text-white/70">Projects (one per line)</label><textarea id="inProjects" rows="3" placeholder="e.g., Student Performance Predictor — Python + Pandas + Scikit-learn&#10;Portfolio Website — React + Tailwind" class="mt-1.5 w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"></textarea></div>
+          <div><label class="text-xs font-semibold text-white/70">Certifications</label><textarea id="inCerts" rows="2" placeholder="e.g., Google Data Analytics — Coursera, 2024" class="mt-1.5 w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"></textarea></div>
+          <div><label class="text-xs font-semibold text-white/70">Internships</label><textarea id="inInterns" rows="2" placeholder="e.g., Web Dev Intern at XYZ — 2 months" class="mt-1.5 w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"></textarea></div>
+          <div><label class="text-xs font-semibold text-white/70">Achievements</label><input id="inAchieve" placeholder="e.g., Hackathon winner, Dean’s list" class="mt-1.5 w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"/></div>
+        </div>
+        <div class="mt-4 flex items-start gap-2 text-xs text-amber-200 bg-amber-500/10 border border-amber-500/20 rounded-xl p-3">⚠️ We never invent experience. Your portfolio & resume will only use what you provide.</div>
+      </div>
+    </div>
+    <!-- footer -->
+    <div class="px-6 sm:px-8 py-4 border-t border-white/10 flex items-center justify-between shrink-0 bg-[#0B1020]/60">
+      <button onclick="prevStep()" id="btnPrev" class="px-6 py-2.5 rounded-full glass text-sm font-semibold disabled:opacity-30">Back</button>
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-white/40 hidden sm:inline">Press Enter to continue</span>
+        <button onclick="nextStep()" id="btnNext" class="px-7 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">Continue →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP VIEW -->
+<div id="appView" class="hidden min-h-screen flex">
+  <!-- Sidebar desktop -->
+  <aside class="hidden lg:flex w-[260px] shrink-0 flex-col border-r border-white/[0.06] bg-[#0A0F1E] sticky top-0 h-screen">
+    <div class="h-[64px] flex items-center gap-3 px-5 border-b border-white/[0.06]">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-4z"/></svg></div>
+      <div><div class="font-display font-bold text-sm leading-none">Career Advisor AI</div><div class="text-[10px] tracking-widest text-white/40">AI MENTOR</div></div>
+    </div>
+    <div class="p-3 space-y-1 overflow-y-auto custom-scroll flex-1" id="sidebarNav">
+      <!-- nav items injected -->
+    </div>
+    <div class="p-3 border-t border-white/[0.06]">
+      <div class="glass rounded-2xl p-3 flex items-center gap-3">
+        <img id="sideAvatar" src="https://i.pravatar.cc/100?img=12" class="w-9 h-9 rounded-full"/>
+        <div class="flex-1 min-w-0"><div id="sideName" class="text-sm font-semibold truncate">Student</div><div id="sideBranch" class="text-xs text-white/50 truncate">B.Tech CSE</div></div>
+        <button onclick="openProfileSettings()" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">⚙️</button>
+      </div>
+      <div class="mt-3 flex items-center gap-2 text-[11px] text-white/50"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> AI Mentor online</div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1 min-w-0 flex flex-col">
+    <!-- topbar -->
+    <header class="h-[64px] flex items-center justify-between px-4 sm:px-6 border-b border-white/[0.06] bg-[#0A0F1E]/80 backdrop-blur sticky top-0 z-40">
+      <div class="flex items-center gap-3">
+        <button onclick="toggleAppDrawer()" class="lg:hidden w-9 h-9 rounded-xl glass flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <div id="topTitle" class="font-display font-bold text-[15px]">Dashboard</div>
+        <span id="topBadge" class="hidden sm:inline text-xs px-2.5 py-1 rounded-full bg-violet-500/20 text-violet-300 font-medium">Personalized</span>
+      </div>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="hidden sm:flex items-center gap-2 glass rounded-full px-3 py-1.5 text-xs"><span class="w-2 h-2 rounded-full bg-emerald-400"></span><span class="text-white/70">Career Progress</span><span id="topProgress" class="font-bold">72%</span></div>
+        <button onclick="switchView('ai-mentor')" class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center glow-blue">💬</button>
+        <img id="topAvatar" src="https://i.pravatar.cc/100?img=12" class="w-8 h-8 rounded-full hidden sm:block"/>
+      </div>
+    </header>
+
+    <!-- drawer mobile -->
+    <div id="appDrawer" class="fixed inset-0 z-50 hidden">
+      <div class="absolute inset-0 bg-black/60" onclick="toggleAppDrawer()"></div>
+      <div class="absolute left-0 top-0 bottom-0 w-[280px] bg-[#0A0F1E] border-r border-white/10 p-4 overflow-y-auto">
+        <div class="flex items-center justify-between mb-4"><span class="font-bold">Menu</span><button onclick="toggleAppDrawer()" class="w-8 h-8 rounded-full glass flex items-center justify-center">✕</button></div>
+        <div id="drawerNav" class="space-y-1"></div>
+      </div>
+    </div>
+
+    <!-- content area -->
+    <main class="flex-1 bg-[#070A14] bg-grid relative">
+      <div class="absolute inset-0 bg-gradient-to-b from-violet-900/10 via-transparent to-transparent pointer-events-none"></div>
+      <div class="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view-panel space-y-6">
+          <!-- welcome + next best action -->
+          <div class="grid lg:grid-cols-[1.6fr_0.9fr] gap-4">
+            <div class="glass-strong rounded-[24px] p-6 relative overflow-hidden">
+              <div class="absolute -right-10 -top-10 w-48 h-48 bg-gradient-to-br from-blue-500/20 to-violet-500/20 blur-3xl rounded-full"></div>
+              <div class="relative">
+                <div class="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/20">● AI Mentor active • Next update in 2h</div>
+                <h2 class="font-display text-[22px] font-bold mt-3">Welcome back, <span id="dashName">Aarav</span> 👋</h2>
+                <p class="text-sm text-white/60 mt-1">Your goal: <span id="dashGoal" class="text-white font-semibold">AI/ML Engineer</span> • <span id="dashYear">3rd Year, B.Tech CSE</span></p>
+                <!-- next best action -->
+                <div class="mt-5 rounded-2xl bg-gradient-to-r from-blue-600 to-violet-600 p-[1px]">
+                  <div class="rounded-2xl bg-[#0F172A] p-4">
+                    <div class="flex items-center gap-2 text-xs font-bold tracking-widest text-amber-300">⚡ NEXT BEST ACTION</div>
+                    <div id="nextActionText" class="text-[15px] font-semibold mt-2 leading-snug">Complete your Machine Learning fundamentals and build your first classification project.</div>
+                    <div class="text-xs text-white/50 mt-1" id="nextActionWhy">Why: This closes your biggest skill gap for AI/ML Engineer (88% match).</div>
+                    <div class="flex gap-2 mt-4">
+                      <button onclick="switchView('roadmap')" class="px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold">Start Task →</button>
+                      <button onclick="completeNextAction()" class="px-5 py-2.5 rounded-full glass text-sm font-semibold">Mark Complete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="glass rounded-[24px] p-5">
+                <div class="flex items-center justify-between"><span class="text-sm font-semibold">Career Progress</span><span class="text-xs px-2 py-1 rounded-full bg-white/10" id="dashProgressLabel">72% • On track</span></div>
+                <div class="mt-4 flex items-center gap-4">
+                  <div class="relative w-24 h-24">
+                    <svg class="w-24 h-24 progress-ring"><circle cx="48" cy="48" r="42" stroke="rgba(255,255,255,0.08)" stroke-width="8" fill="none"/><circle id="progressCircle" cx="48" cy="48" r="42" stroke="url(#grad)" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="73.89"/></svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center"><span id="dashProgressBig" class="text-xl font-bold">72%</span><span class="text-[10px] tracking-widest text-white/50">COMPLETE</span></div>
+                    <svg width="0" height="0"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs></svg>
+                  </div>
+                  <div class="flex-1 space-y-2 text-xs">
+                    <div class="flex justify-between"><span class="text-white/60">Roadmap</span><span id="dashRoadmapPct" class="font-semibold">42%</span></div><div class="h-1.5 bg-white/10 rounded-full"><div id="dashRoadmapBar" class="h-full bg-gradient-to-r from-blue-500 to-violet-500 rounded-full" style="width:42%"></div></div>
+                    <div class="flex justify-between"><span class="text-white/60">Portfolio</span><span id="dashPortfolioPct" class="font-semibold">3 projects</span></div><div class="h-1.5 bg-white/10 rounded-full"><div class="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full" style="width:55%"></div></div>
+                    <div class="flex justify-between"><span class="text-white/60">Internship</span><span id="dashInternPct" class="font-semibold">68%</span></div><div class="h-1.5 bg-white/10 rounded-full"><div id="dashInternBar" class="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full" style="width:68%"></div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="glass rounded-2xl p-4 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">🎯</div>
+                <div class="flex-1"><div class="text-xs text-white/50">Internship Readiness</div><div class="text-sm font-bold" id="dashInternReady">68% • 2 steps away</div></div>
+                <button onclick="switchView('internships')" class="px-4 py-2 rounded-full bg-white text-black text-xs font-semibold">View</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- stats row -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="glass rounded-2xl p-4"><div class="text-xs text-white/50">Current Learning</div><div class="text-sm font-semibold mt-1" id="dashLearning">Machine Learning Fundamentals</div><div class="text-xs text-white/40 mt-1">Month 4 of 6</div></div>
+            <div class="glass rounded-2xl p-4"><div class="text-xs text-white/50">Skills</div><div class="flex flex-wrap gap-1.5 mt-2" id="dashSkills"></div></div>
+            <div class="glass rounded-2xl p-4"><div class="text-xs text-white/50">Portfolio Projects</div><div class="text-2xl font-bold mt-1" id="dashProjectsCount">3</div><div class="text-xs text-emerald-400">+1 this month</div></div>
+            <div class="glass rounded-2xl p-4"><div class="text-xs text-white/50">Next Milestone</div><div class="text-sm font-semibold mt-1">Complete ML Project</div><div class="text-xs text-white/40 mt-1">Est. 5 days • High portfolio value</div></div>
+          </div>
+
+          <!-- career profile + recommended -->
+          <div class="grid lg:grid-cols-3 gap-4">
+            <div class="lg:col-span-1 glass rounded-2xl p-5">
+              <h3 class="font-semibold text-sm">Your Career Profile</h3>
+              <div class="mt-4 space-y-3 text-sm">
+                <div class="flex justify-between"><span class="text-white/50">Career interests</span><span id="profInterests" class="font-medium text-right max-w-[150px] truncate">AI, Data Science</span></div>
+                <div class="flex justify-between"><span class="text-white/50">Current skills</span><span id="profSkills" class="font-medium">Python, SQL</span></div>
+                <div class="flex justify-between"><span class="text-white/50">Strengths</span><span id="profStrengths" class="font-medium">Problem Solving</span></div>
+                <div class="flex justify-between"><span class="text-white/50">Skill level</span><span class="px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold" id="profLevel">Intermediate</span></div>
+                <div class="flex justify-between"><span class="text-white/50">Career goal</span><span id="profGoal" class="font-medium">AI/ML Engineer</span></div>
+              </div>
+              <button onclick="switchView('career-paths')" class="mt-5 w-full py-2.5 rounded-full glass text-sm font-semibold">View Career Paths →</button>
+            </div>
+            <div class="lg:col-span-2 glass rounded-2xl p-5">
+              <div class="flex items-center justify-between"><h3 class="font-semibold text-sm">Recommended Career Paths</h3><span class="text-[11px] px-2 py-1 rounded-full bg-white/10">AI ranked • Approx. guidance</span></div>
+              <div id="dashCareerCards" class="grid sm:grid-cols-3 gap-3 mt-4"></div>
+              <p class="text-[11px] text-white/40 mt-3">Match % is an approximate AI recommendation, not a guaranteed prediction.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CAREER PATHS VIEW -->
+        <div id="view-career-paths" class="view-panel hidden space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="font-display text-xl font-bold">Career Paths for you</h2>
+            <div class="flex items-center gap-2 text-xs"><span class="px-3 py-1.5 rounded-full bg-white text-black font-semibold">All</span><span class="px-3 py-1.5 rounded-full glass">Tech</span><span class="px-3 py-1.5 rounded-full glass">Data</span><span class="px-3 py-1.5 rounded-full glass">Design</span></div>
+          </div>
+          <div id="careerGrid" class="grid md:grid-cols-3 gap-4"></div>
+        </div>
+
+        <!-- SKILLS VIEW -->
+        <div id="view-skills" class="view-panel hidden space-y-6">
+          <h2 class="font-display text-xl font-bold">Skill Gap Analysis</h2>
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div class="glass rounded-2xl p-5">
+              <h3 class="font-semibold text-sm">Your Current Skills</h3>
+              <div id="skillBars" class="mt-4 space-y-4"></div>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <h3 class="font-semibold text-sm">Skills You Should Learn</h3>
+              <p class="text-xs text-white/50">Prioritized for your top match: <span id="skillTopCareer" class="text-white font-semibold">AI/ML Engineer</span></p>
+              <div id="skillsToLearn" class="mt-4 space-y-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROADMAP VIEW -->
+        <div id="view-roadmap" class="view-panel hidden space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="font-display text-xl font-bold">Personalized Roadmap</h2>
+            <div class="flex items-center gap-2">
+              <span id="roadmapProgressText" class="text-xs text-white/60">2 of 6 completed</span>
+              <button onclick="resetRoadmap()" class="text-xs px-3 py-1.5 rounded-full glass">Reset</button>
+            </div>
+          </div>
+          <div class="glass rounded-2xl p-5 sm:p-6">
+            <div id="roadmapTimeline" class="relative space-y-0"></div>
+          </div>
+        </div>
+
+        <!-- PROJECTS VIEW -->
+        <div id="view-projects" class="view-panel hidden space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="font-display text-xl font-bold">Project Recommendations</h2>
+            <div class="flex gap-2"><select id="projectFilter" onchange="renderProjects()" class="px-3 py-2 rounded-full glass text-xs"><option value="all">All levels</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></select><button onclick="renderProjects()" class="px-4 py-2 rounded-full bg-white text-black text-xs font-semibold">Refresh AI</button></div>
+          </div>
+          <div id="projectsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+
+        <!-- PORTFOLIO VIEW -->
+        <div id="view-portfolio" class="view-panel hidden space-y-6">
+          <h2 class="font-display text-xl font-bold">Portfolio Builder</h2>
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div class="glass rounded-2xl p-5 space-y-4">
+              <div class="flex items-center justify-between"><h3 class="font-semibold text-sm">Manage Content</h3><button onclick="aiImprovePortfolio()" class="text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-violet-600 font-semibold">✨ Improve With AI</button></div>
+              <label class="block"><span class="text-xs font-semibold text-white/70">About Me</span><textarea id="portAbout" rows="3" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"></textarea></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Skills (comma separated)</span><input id="portSkills" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Projects</span><textarea id="portProjects" rows="3" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"></textarea></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Education</span><input id="portEdu" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Career Goal</span><input id="portGoal" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              <button onclick="generatePortfolioPreview()" class="w-full py-3 rounded-full bg-white text-black font-semibold text-sm">Generate Portfolio Preview</button>
+            </div>
+            <div class="glass rounded-2xl overflow-hidden">
+              <div class="h-10 flex items-center gap-1.5 px-4 border-b border-white/10 bg-white/[0.03]"><span class="w-3 h-3 rounded-full bg-red-400"></span><span class="w-3 h-3 rounded-full bg-yellow-400"></span><span class="w-3 h-3 rounded-full bg-green-400"></span><span class="ml-3 text-xs text-white/40">yourname.dev — Portfolio Preview</span></div>
+              <div id="portfolioPreview" class="p-6 bg-gradient-to-br from-[#0F172A] to-[#1E1B4B] min-h-[420px]">
+                <div class="text-center py-12 text-white/40 text-sm">Click “Generate Portfolio Preview” to see your site.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUME VIEW -->
+        <div id="view-resume" class="view-panel hidden space-y-6">
+          <h2 class="font-display text-xl font-bold">Resume Builder</h2>
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div class="glass rounded-2xl p-5 space-y-4">
+              <div class="flex items-center justify-between"><h3 class="font-semibold text-sm">Resume Sections</h3><span class="text-xs px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300">ATS-friendly</span></div>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Personal Information</span><input id="resPersonal" placeholder="Name • Email • Phone • LinkedIn" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Career Objective</span><textarea id="resObjective" rows="2" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"></textarea></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Education</span><textarea id="resEdu" rows="2" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"></textarea></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Skills</span><input id="resSkills" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Projects</span><textarea id="resProjects" rows="2" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"></textarea></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Internships</span><input id="resIntern" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              <label class="block"><span class="text-xs font-semibold text-white/70">Certifications & Achievements</span><input id="resCerts" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              <button onclick="generateResume()" class="w-full py-3 rounded-full bg-gradient-to-r from-blue-500 to-violet-600 font-semibold text-sm">✨ Generate Resume with AI</button>
+              <p class="text-[11px] text-amber-200/70">We use only your provided info. No fake internships or certificates added.</p>
+            </div>
+            <div class="bg-white text-[#0F172A] rounded-2xl p-6 min-h-[560px] shadow-xl" id="resumePreview">
+              <div class="text-center border-b border-gray-200 pb-4"><div id="rName" class="font-bold text-lg">Your Name</div><div id="rContact" class="text-xs text-gray-500">email • phone • linkedin</div></div>
+              <div class="mt-4 text-xs space-y-4">
+                <div><div class="font-bold tracking-widest text-[11px] text-gray-500">CAREER OBJECTIVE</div><div id="rObjective" class="mt-1 text-gray-700 leading-relaxed">—</div></div>
+                <div><div class="font-bold tracking-widest text-[11px] text-gray-500">EDUCATION</div><div id="rEdu" class="mt-1 text-gray-700">—</div></div>
+                <div><div class="font-bold tracking-widest text-[11px] text-gray-500">SKILLS</div><div id="rSkills" class="mt-1 text-gray-700">—</div></div>
+                <div><div class="font-bold tracking-widest text-[11px] text-gray-500">PROJECTS</div><div id="rProjects" class="mt-1 text-gray-700">—</div></div>
+                <div><div class="font-bold tracking-widest text-[11px] text-gray-500">INTERNSHIPS</div><div id="rIntern" class="mt-1 text-gray-700">—</div></div>
+                <div><div class="font-bold tracking-widest text-[11px] text-gray-500">CERTIFICATIONS</div><div id="rCerts" class="mt-1 text-gray-700">—</div></div>
+              </div>
+              <div class="mt-6 flex gap-2"><button onclick="window.print()" class="flex-1 py-2 rounded-full bg-[#0F172A] text-white text-xs font-semibold">Download PDF</button><button onclick="copyResume()" class="flex-1 py-2 rounded-full border border-gray-300 text-xs font-semibold">Copy Text</button></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERNSHIPS VIEW -->
+        <div id="view-internships" class="view-panel hidden space-y-6">
+          <h2 class="font-display text-xl font-bold">Internship Preparation</h2>
+          <div class="grid lg:grid-cols-3 gap-4">
+            <div class="lg:col-span-2 glass rounded-2xl p-5">
+              <h3 class="font-semibold text-sm">Internship Readiness</h3>
+              <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-4" id="internReadiness"></div>
+              <div class="mt-6 p-4 rounded-2xl bg-gradient-to-r from-violet-600/20 to-blue-600/20 border border-violet-500/20">
+                <div class="text-xs font-bold tracking-widest text-violet-300">PERSONALIZED RECOMMENDATION</div>
+                <div id="internRecommendation" class="text-sm font-semibold mt-2">Complete one portfolio-quality project and update your GitHub README.</div>
+                <div class="text-xs text-white/60 mt-1">This will boost Portfolio (+15%) and Technical Skills (+10%).</div>
+                <button onclick="switchView('projects')" class="mt-3 px-4 py-2 rounded-full bg-white text-black text-xs font-semibold">Browse Projects →</button>
+              </div>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <h3 class="font-semibold text-sm">Checklist</h3>
+              <div id="internChecklist" class="mt-4 space-y-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERVIEW VIEW -->
+        <div id="view-interview" class="view-panel hidden space-y-6">
+          <h2 class="font-display text-xl font-bold">AI Interview Coach</h2>
+          <div class="grid lg:grid-cols-[340px_1fr] gap-4">
+            <div class="glass rounded-2xl p-5 space-y-4">
+              <div><label class="text-xs font-semibold text-white/70">Target Career</label><select id="interviewCareer" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"><option class="bg-[#0B1020]">AI/ML Engineer</option><option class="bg-[#0B1020]">Software Developer</option><option class="bg-[#0B1020]">Data Scientist</option><option class="bg-[#0B1020]">Cybersecurity Analyst</option></select></div>
+              <div><label class="text-xs font-semibold text-white/70">Interview Type</label><div id="interviewTypes" class="grid grid-cols-2 gap-2 mt-2"></div></div>
+              <div><label class="text-xs font-semibold text-white/70">Difficulty</label><select id="interviewDiff" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"><option class="bg-[#0B1020]">Beginner</option><option class="bg-[#0B1020]">Intermediate</option><option class="bg-[#0B1020]">Advanced</option></select></div>
+              <button onclick="startInterview()" class="w-full py-3 rounded-full bg-gradient-to-r from-blue-500 to-violet-600 font-semibold text-sm">Start Interview →</button>
+              <div class="text-xs text-white/40">AI asks one question at a time and gives instant feedback.</div>
+            </div>
+            <div class="glass rounded-2xl p-5 flex flex-col min-h-[460px]">
+              <div id="interviewChat" class="flex-1 space-y-4 overflow-y-auto custom-scroll pr-1">
+                <div class="text-center py-12"><div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center mx-auto">🎤</div><div class="text-sm font-semibold mt-3">Ready to practice?</div><div class="text-xs text-white/50">Select options and start. The AI will adapt to your profile.</div></div>
+              </div>
+              <div id="interviewInputArea" class="hidden mt-4 flex gap-2">
+                <input id="interviewAnswer" placeholder="Type your answer..." class="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30"/>
+                <button onclick="submitInterviewAnswer()" class="px-6 py-3 rounded-xl bg-white text-black text-sm font-semibold">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI MENTOR VIEW -->
+        <div id="view-ai-mentor" class="view-panel hidden space-y-6">
+          <h2 class="font-display text-xl font-bold">AI Mentor — Ask anything</h2>
+          <div class="grid lg:grid-cols-[1fr_320px] gap-4">
+            <div class="glass rounded-2xl flex flex-col h-[560px] overflow-hidden">
+              <div id="chatMessages" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-4"></div>
+              <div class="p-3 border-t border-white/10">
+                <div class="flex gap-2">
+                  <input id="chatInput" placeholder="Ask: Should I learn Python or Java? What should I do this week?" class="flex-1 px-4 py-3 rounded-full bg-white/[0.06] border border-white/10 text-sm placeholder:text-white/30 focus:outline-none focus:border-violet-500/50"/>
+                  <button onclick="sendChat()" class="w-11 h-11 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center shrink-0">➤</button>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-3" id="chatQuick"></div>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="glass rounded-2xl p-4">
+                <div class="text-xs font-bold tracking-widest text-violet-300">CONTEXT AWARE</div>
+                <div class="text-sm font-semibold mt-1">Answers use your saved profile & progress</div>
+                <div id="chatContext" class="mt-3 space-y-2 text-xs"></div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="text-sm font-semibold">Try asking</div>
+                <div class="mt-2 space-y-2 text-xs">
+                  <button onclick="quickAsk('What should I learn after Python?')" class="w-full text-left px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10">What should I learn after Python?</button>
+                  <button onclick="quickAsk('Am I ready for an internship?')" class="w-full text-left px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10">Am I ready for an internship?</button>
+                  <button onclick="quickAsk('Which projects should I build?')" class="w-full text-left px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10">Which projects should I build?</button>
+                  <button onclick="quickAsk('How do I prepare for AI/ML interview?')" class="w-full text-left px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10">How do I prepare for AI/ML interview?</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE VIEW -->
+        <div id="view-profile" class="view-panel hidden space-y-6">
+          <h2 class="font-display text-xl font-bold">Profile & Settings</h2>
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div class="glass rounded-2xl p-5 space-y-4">
+              <h3 class="font-semibold text-sm">Edit Profile</h3>
+              <div class="grid sm:grid-cols-2 gap-3">
+                <label class="block"><span class="text-xs text-white/60">Name</span><input id="editName" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+                <label class="block"><span class="text-xs text-white/60">College</span><input id="editCollege" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+                <label class="block"><span class="text-xs text-white/60">Branch</span><input id="editBranch" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+                <label class="block"><span class="text-xs text-white/60">Year</span><input id="editYear" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              </div>
+              <label class="block"><span class="text-xs text-white/60">Career Goal</span><input id="editGoal" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-sm"/></label>
+              <button onclick="saveProfileEdits()" class="w-full py-3 rounded-full bg-white text-black font-semibold text-sm">Save Changes</button>
+              <button onclick="resetAllData()" class="w-full py-2.5 rounded-full glass text-sm font-semibold text-red-300">Reset all data & start over</button>
+            </div>
+            <div class="glass rounded-2xl p-5">
+              <h3 class="font-semibold text-sm">How AI helps you</h3>
+              <ul class="mt-3 space-y-2 text-xs text-white/60 leading-relaxed">
+                <li>• Personalizes every recommendation based on your profile</li>
+                <li>• Tracks roadmap progress and adapts next steps</li>
+                <li>• Explains why each skill/project is suggested</li>
+                <li>• Never guarantees jobs/salary — only guidance</li>
+                <li>• Never invents internships or certificates</li>
+              </ul>
+              <div class="mt-6 p-4 rounded-xl bg-white/5 border border-white/10">
+                <div class="text-sm font-semibold" id="profileSummaryName">—</div>
+                <div class="text-xs text-white/50" id="profileSummaryDetail">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Floating chatbot -->
+<button id="fabChat" onclick="switchView('ai-mentor'); document.getElementById('appView').scrollIntoView({behavior:'smooth'})" class="fixed bottom-5 right-5 w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center shadow-xl glow-blue z-40 hidden">💬</button>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-5 py-3 rounded-full bg-white text-black text-sm font-medium shadow-xl hidden z-[200]"></div>
+
+<script>
+// ---------- State ----------
+const interestsList = ["Artificial Intelligence","Machine Learning","Data Science","Software Development","Web Development","Cybersecurity","Cloud Computing","App Development","UI/UX","Robotics","Business","Research"];
+let selectedInterests = new Set();
+let skills = []; // {name, level: 0-100}
+let strengths = new Set();
+let currentStep = 1;
+let profile = null;
+let roadmap = [];
+const quickStrengths = ["Problem Solving","Communication","Team Leadership","Creativity","Analytical Thinking","Adaptability","Time Management","Critical Thinking"];
+
+const careersDB = [
+  {title:"AI/ML Engineer", icon:"🤖", tags:["Artificial Intelligence","Machine Learning","Data Science","Robotics"], required:["Python","Machine Learning","Statistics","Data Structures","Git/GitHub"], color:"from-blue-500 to-cyan-500", desc:"Build intelligent systems, models and pipelines that learn from data."},
+  {title:"Software Developer", icon:"💻", tags:["Software Development","Web Development","App Development","Cloud Computing"], required:["JavaScript","Data Structures","Git/GitHub","SQL","System Design"], color:"from-violet-500 to-purple-600", desc:"Design and ship scalable software across web, mobile and cloud."},
+  {title:"Data Scientist", icon:"📊", tags:["Data Science","Machine Learning","Research","Business"], required:["Python","SQL","Statistics","Data Visualization","Machine Learning"], color:"from-emerald-500 to-teal-500", desc:"Extract insights and build predictive models from complex datasets."},
+  {title:"Cybersecurity Analyst", icon:"🔒", tags:["Cybersecurity","Cloud Computing","Research"], required:["Networking","Linux","Security Fundamentals","Python","Cloud"], color:"from-orange-500 to-red-500", desc:"Protect systems and data from threats and vulnerabilities."},
+  {title:"UI/UX Designer", icon:"🎨", tags:["UI/UX","Web Development","App Development","Business"], required:["Figma","Design Thinking","Prototyping","User Research","HTML/CSS"], color:"from-pink-500 to-rose-500", desc:"Craft intuitive, beautiful digital experiences users love."},
+  {title:"Cloud Engineer", icon:"☁️", tags:["Cloud Computing","Software Development","Cybersecurity"], required:["AWS","Docker","Linux","Networking","Python"], color:"from-sky-500 to-blue-600", desc:"Architect and operate resilient cloud infrastructure."},
+];
+
+const projectsDB = [
+  {name:"Student Performance Predictor", diff:"Beginner", tech:"Python + Pandas + Scikit-learn", skills:"Data preprocessing + Machine Learning", time:"1 week", value:"High", career:"AI/ML Engineer", icon:"📈"},
+  {name:"AI Chatbot Assistant", diff:"Intermediate", tech:"Python + NLP + Flask", skills:"NLP + API Development", time:"2 weeks", value:"Very High", career:"AI/ML Engineer", icon:"🤖"},
+  {name:"E-Commerce Website", diff:"Intermediate", tech:"React + Node.js + MongoDB", skills:"Full-stack + Databases", time:"3 weeks", value:"High", career:"Software Developer", icon:"🛒"},
+  {name:"Portfolio Website", diff:"Beginner", tech:"HTML + Tailwind + JS", skills:"Frontend + Deployment", time:"4 days", value:"Medium", career:"Software Developer", icon:"🌐"},
+  {name:"Sales Dashboard", diff:"Beginner", tech:"Python + SQL + Tableau", skills:"SQL + Visualization", time:"1 week", value:"High", career:"Data Scientist", icon:"📊"},
+  {name:"Threat Detector", diff:"Advanced", tech:"Python + Wireshark + ML", skills:"Security + ML", time:"3 weeks", value:"Very High", career:"Cybersecurity Analyst", icon:"🛡️"},
+  {name:"TaskFlow Mobile App", diff:"Intermediate", tech:"Flutter + Firebase", skills:"Mobile + Backend", time:"2 weeks", value:"High", career:"Software Developer", icon:"📱"},
+  {name:"Figma Design System", diff:"Beginner", tech:"Figma + Auto-layout", skills:"UI Design + Tokens", time:"5 days", value:"Medium", career:"UI/UX Designer", icon:"🎨"},
+];
+
+const roadmapTemplate = [
+  {month:"MONTH 1", title:"Python Fundamentals", goal:"Master core syntax & problem solving", skills:"Python, Git basics", resources:"Python Docs, freeCodeCamp", tasks:["Complete Python basics","Solve 20 problems","Setup GitHub"], project:"Calculator CLI"},
+  {month:"MONTH 2", title:"NumPy + Pandas", goal:"Data manipulation & analysis", skills:"NumPy, Pandas, Jupyter", resources:"Kaggle Learn, Pandas Docs", tasks:["NumPy arrays","Pandas DataFrames","EDA on dataset"], project:"Exploratory Data Analysis"},
+  {month:"MONTH 3", title:"Statistics + Data Analysis", goal:"Statistical thinking for ML", skills:"Statistics, SQL, Visualization", resources:"Khan Academy, Mode SQL", tasks:["Descriptive stats","SQL queries","Charting"], project:"Sales Insights Dashboard"},
+  {month:"MONTH 4", title:"Machine Learning", goal:"Supervised learning core", skills:"Scikit-learn, Model eval", resources:"Andrew Ng ML, Kaggle", tasks:["Linear/Logistic Regression","Train-test split","Metrics"], project:"Classification Model"},
+  {month:"MONTH 5", title:"Build ML Projects", goal:"Portfolio-grade projects", skills:"End-to-end ML pipeline", resources:"Kaggle Competitions", tasks:["Build 2 projects","Write READMEs","Deploy one"], project:"Student Predictor + Chatbot"},
+  {month:"MONTH 6", title:"Portfolio + Resume + Internship", goal:"Become internship-ready", skills:"Portfolio, Resume, Interview", resources:"Portfolio templates, STAR method", tasks:["Portfolio site","ATS resume","Mock interviews"], project:"Personal Portfolio"},
+];
+
+// ---------- Helpers ----------
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.remove('hidden');
+  setTimeout(()=>t.classList.add('hidden'),2500);
+}
+function toggleMobileMenu(){ document.getElementById('mobileMenu').classList.toggle('hidden'); }
+
+// ---------- Onboarding ----------
+function openOnboarding(){
+  document.getElementById('onboardingModal').classList.remove('hidden');
+  renderInterests(); renderStrengthQuick();
+  updateStepUI();
+}
+function closeOnboarding(){ document.getElementById('onboardingModal').classList.add('hidden'); }
+
+function updateStepUI(){
+  document.getElementById('stepNum').textContent=currentStep;
+  document.querySelectorAll('.step-panel').forEach((el,i)=> el.classList.toggle('hidden', i+1!==currentStep));
+  for(let i=1;i<=6;i++){
+    const p=document.getElementById('prog'+i);
+    if(i<currentStep) p.className="h-1.5 flex-1 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 transition";
+    else if(i===currentStep) p.className="h-1.5 flex-1 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 transition";
+    else p.className="h-1.5 flex-1 rounded-full bg-white/10 transition";
+  }
+  document.getElementById('btnPrev').disabled=currentStep===1;
+  document.getElementById('btnNext').textContent=currentStep===6?"Finish & Analyze →":"Continue →";
+  // goal cards border
+  const goalVal=document.querySelector('input[name="goalType"]:checked')?.value;
+  document.getElementById('goalCard1').style.borderColor=goalVal==='know'?'#8B5CF6':'rgba(255,255,255,0.1)';
+  document.getElementById('goalCard2').style.borderColor=goalVal==='exploring'?'#8B5CF6':'rgba(255,255,255,0.1)';
+  document.getElementById('goalCard3').style.borderColor=goalVal==='unsure'?'#8B5CF6':'rgba(255,255,255,0.1)';
+}
+function prevStep(){ if(currentStep>1){ currentStep--; updateStepUI(); } }
+function nextStep(){
+  if(currentStep===1){
+    if(!document.getElementById('inName').value.trim() || !document.getElementById('inCollege').value.trim() || !document.getElementById('inCourse').value || !document.getElementById('inBranch').value.trim() || !document.getElementById('inYear').value){ showToast("Please fill all education fields"); return; }
+  }
+  if(currentStep===2 && selectedInterests.size===0){ showToast("Select at least one interest"); return; }
+  if(currentStep===3 && skills.length===0){ showToast("Add at least one skill"); return; }
+  if(currentStep===4 && strengths.size===0){ showToast("Add at least one strength"); return; }
+  if(currentStep===5){
+    const gv=document.querySelector('input[name="goalType"]:checked').value;
+    if(gv==='know' && !document.getElementById('goalTextKnow').value.trim()){ showToast("Tell us your target career"); return; }
+  }
+  if(currentStep<6){ currentStep++; updateStepUI(); }
+  else { finishOnboarding(); }
+}
+document.querySelectorAll('input[name="goalType"]').forEach(r=>r.addEventListener('change',updateStepUI));
+
+function renderInterests(){
+  const grid=document.getElementById('interestGrid');
+  grid.innerHTML=interestsList.map(name=>{
+    const sel=selectedInterests.has(name);
+    return `<button onclick="toggleInterest('${name}')" class="text-left p-3 rounded-2xl border flex items-center gap-3 transition ${sel?'bg-violet-600 border-violet-500 text-white':'glass border-white/10 hover:bg-white/[0.06]'}">
+      <span class="w-8 h-8 rounded-xl ${sel?'bg-white/20':'bg-white/10'} flex items-center justify-center text-sm">${interestIcon(name)}</span>
+      <span class="text-sm font-medium">${name}</span>
+      ${sel?'<span class="ml-auto">✓</span>':''}
+    </button>`;
+  }).join('');
+  renderSelectedInterests();
+}
+function interestIcon(n){
+  const m={"Artificial Intelligence":"🧠","Machine Learning":"🤖","Data Science":"📊","Software Development":"💻","Web Development":"🌐","Cybersecurity":"🔒","Cloud Computing":"☁️","App Development":"📱","UI/UX":"🎨","Robotics":"🦾","Business":"💼","Research":"🔬"};
+  return m[n]||"✨";
+}
+function toggleInterest(name){
+  if(selectedInterests.has(name)) selectedInterests.delete(name); else selectedInterests.add(name);
+  renderInterests();
+}
+function addCustomInterest(){
+  const v=document.getElementById('customInterest').value.trim();
+  if(!v) return;
+  if(!interestsList.includes(v)) interestsList.push(v);
+  selectedInterests.add(v);
+  document.getElementById('customInterest').value="";
+  renderInterests();
+}
+document.getElementById('customInterest')?.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); addCustomInterest(); }});
+function renderSelectedInterests(){
+  const c=document.getElementById('selectedInterests');
+  c.innerHTML=[...selectedInterests].map(n=>`<span class="px-3 py-1.5 rounded-full bg-violet-600 text-xs font-medium flex items-center gap-1.5">${n} <button onclick="toggleInterest('${n}')" class="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">✕</button></span>`).join('');
+}
+function addSkill(){
+  const input=document.getElementById('skillInput');
+  const v=input.value.trim();
+  if(!v) return;
+  if(skills.find(s=>s.name.toLowerCase()===v.toLowerCase())){ showToast("Skill already added"); return; }
+  // random level for demo based on position
+  const lvl = Math.floor(30+Math.random()*50);
+  skills.push({name:v, level:lvl});
+  input.value="";
+  renderSkills();
+}
+document.getElementById('skillInput').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); addSkill(); }});
+function renderSkills(){
+  const c=document.getElementById('skillsList');
+  if(skills.length===0){ c.innerHTML='<div class="text-xs text-white/40">No skills yet — add one above.</div>'; return; }
+  c.innerHTML=skills.map((s,i)=>`
+    <div class="flex items-center gap-3 p-3 rounded-xl glass">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-xs font-bold">${s.name[0].toUpperCase()}</div>
+      <div class="flex-1"><div class="text-sm font-medium">${s.name}</div><input type="range" min="10" max="95" value="${s.level}" oninput="updateSkillLevel(${i},this.value)" class="w-full mt-1 h-1 bg-white/10 rounded-full appearance-none range-slider"/></div>
+      <span class="text-xs font-bold px-2 py-1 rounded-full bg-white/10">${s.level}%</span>
+      <button onclick="removeSkill(${i})" class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-xs">✕</button>
+    </div>
+  `).join('');
+}
+function updateSkillLevel(i,val){ skills[i].level=parseInt(val); renderSkills(); }
+function removeSkill(i){ skills.splice(i,1); renderSkills(); }
+
+function addStrength(){
+  const v=document.getElementById('strengthInput').value.trim();
+  if(!v) return;
+  strengths.add(v);
+  document.getElementById('strengthInput').value="";
+  renderStrengths();
+}
+document.getElementById('strengthInput').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); addStrength(); }});
+function renderStrengths(){
+  document.getElementById('strengthsList').innerHTML=[...strengths].map(s=>`<span class="px-3 py-1.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-500/20 text-xs font-medium flex items-center gap-1.5">${s} <button onclick="removeStrength('${s.replace(/'/g,"\\'")}')" class="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center">✕</button></span>`).join('');
+}
+function removeStrength(s){ strengths.delete(s); renderStrengths(); }
+function renderStrengthQuick(){
+  document.getElementById('strengthQuick').innerHTML=quickStrengths.map(s=>`<button onclick="strengths.add('${s}');renderStrengths()" class="px-3 py-1.5 rounded-full glass text-xs hover:bg-white/10">${s} +</button>`).join('');
+}
+
+function finishOnboarding(){
+  const goalType=document.querySelector('input[name="goalType"]:checked').value;
+  let goalText="";
+  if(goalType==='know') goalText=document.getElementById('goalTextKnow').value.trim();
+  else if(goalType==='exploring') goalText="Exploring options";
+  else goalText="Discovering best fit";
+  profile={
+    name:document.getElementById('inName').value.trim(),
+    college:document.getElementById('inCollege').value.trim(),
+    course:document.getElementById('inCourse').value,
+    branch:document.getElementById('inBranch').value.trim(),
+    year:document.getElementById('inYear').value,
+    gradYear:document.getElementById('inGrad').value,
+    interests:[...selectedInterests],
+    skills:[...skills],
+    strengths:[...strengths],
+    goalType, goalText,
+    projects:document.getElementById('inProjects').value.split('\n').filter(s=>s.trim()),
+    certs:document.getElementById('inCerts').value.split('\n').filter(s=>s.trim()),
+    internships:document.getElementById('inInterns').value.split('\n').filter(s=>s.trim()),
+    achievements:document.getElementById('inAchieve').value.trim()
+  };
+  // init roadmap
+  roadmap = roadmapTemplate.map((r,idx)=> ({...r, completed: idx<1, tasksCompleted: idx===0?[true,true,false]:[false,false,false]}));
+  localStorage.setItem('ca_profile', JSON.stringify(profile));
+  localStorage.setItem('ca_roadmap', JSON.stringify(roadmap));
+  closeOnboarding();
+  initApp();
+  showToast("Profile created — AI is analyzing your fit ✨");
+}
+
+// ---------- App Init ----------
+function initApp(){
+  const saved=localStorage.getItem('ca_profile');
+  if(saved) profile=JSON.parse(saved);
+  const savedRoadmap=localStorage.getItem('ca_roadmap');
+  if(savedRoadmap) roadmap=JSON.parse(savedRoadmap);
+  if(!profile){
+    document.getElementById('landingView').classList.remove('hidden');
+    document.getElementById('landingNav').classList.remove('hidden');
+    document.getElementById('appView').classList.add('hidden');
+    document.getElementById('fabChat').classList.add('hidden');
+    return;
+  }
+  document.getElementById('landingView').classList.add('hidden');
+  document.getElementById('landingNav').classList.add('hidden');
+  document.getElementById('appView').classList.remove('hidden');
+  document.getElementById('fabChat').classList.remove('hidden');
+  buildSidebar();
+  populateAll();
+  switchView('dashboard');
+}
+
+function buildSidebar(){
+  const items=[
+    {id:'dashboard', label:'Dashboard', icon:'▦'},
+    {id:'career-paths', label:'Career Paths', icon:'🎯'},
+    {id:'skills', label:'Skills', icon:'📊'},
+    {id:'roadmap', label:'Roadmap', icon:'🗺️'},
+    {id:'projects', label:'Projects', icon:'📦'},
+    {id:'portfolio', label:'Portfolio', icon:'🌐'},
+    {id:'resume', label:'Resume', icon:'📄'},
+    {id:'internships', label:'Internships', icon:'💼'},
+    {id:'interview', label:'Interview Coach', icon:'🎤'},
+    {id:'ai-mentor', label:'AI Mentor', icon:'💬', badge:'AI'},
+    {id:'profile', label:'Profile & Settings', icon:'⚙️'},
+  ];
+  const html=items.map(it=>`
+    <button onclick="switchView('${it.id}')" data-nav="${it.id}" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:bg-white/[0.06] hover:text-white transition text-left">
+      <span class="w-8 h-8 rounded-lg bg-white/[0.06] flex items-center justify-center text-[13px]">${it.icon}</span>
+      <span class="flex-1">${it.label}</span>
+      ${it.badge?`<span class="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-600 text-white font-bold">${it.badge}</span>`:''}
+    </button>
+  `).join('');
+  document.getElementById('sidebarNav').innerHTML=html;
+  document.getElementById('drawerNav').innerHTML=html;
+  // set side info
+  document.getElementById('sideName').textContent=profile.name;
+  document.getElementById('sideBranch').textContent=profile.branch + " • " + profile.year;
+  document.getElementById('topAvatar').src="https://i.pravatar.cc/100?img=12";
+  document.getElementById('sideAvatar').src="https://i.pravatar.cc/100?img=12";
+}
+
+let currentView='dashboard';
+function switchView(id){
+  currentView=id;
+  document.querySelectorAll('.view-panel').forEach(el=>el.classList.add('hidden'));
+  document.getElementById('view-'+id).classList.remove('hidden');
+  document.getElementById('topTitle').textContent = id.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  document.querySelectorAll('[data-nav]').forEach(btn=>{
+    if(btn.dataset.nav===id) btn.className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-white text-black transition text-left";
+    else btn.className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:bg-white/[0.06] hover:text-white transition text-left";
+  });
+  document.getElementById('appDrawer').classList.add('hidden');
+  // trigger renders
+  if(id==='dashboard') renderDashboard();
+  if(id==='career-paths') renderCareerPaths();
+  if(id==='skills') renderSkillsView();
+  if(id==='roadmap') renderRoadmap();
+  if(id==='projects') renderProjects();
+  if(id==='internships') renderInternships();
+  if(id==='ai-mentor') initChat();
+  if(id==='profile') renderProfileView();
+  if(id==='portfolio') initPortfolio();
+  if(id==='resume') initResume();
+  if(id==='interview') initInterview();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function toggleAppDrawer(){ document.getElementById('appDrawer').classList.toggle('hidden'); }
+
+function populateAll(){
+  // fill generic
+  if(!roadmap.length) roadmap=roadmapTemplate.map(r=>({...r,completed:false,tasksCompleted:[false,false,false]}));
+}
+
+// ---------- Scoring ----------
+function scoreCareer(career){
+  const interests=profile.interests.map(s=>s.toLowerCase());
+  const skillNames=profile.skills.map(s=>s.name.toLowerCase());
+  let score=0;
+  career.tags.forEach(t=>{ if(interests.includes(t.toLowerCase())) score+=18; else if(interests.some(i=>t.toLowerCase().includes(i) || i.includes(t.toLowerCase()))) score+=8; });
+  career.required.forEach(r=>{
+    if(skillNames.some(s=> s.includes(r.toLowerCase()) || r.toLowerCase().includes(s))) score+=10;
+  });
+  profile.strengths.forEach(st=>{
+    if(career.title.toLowerCase().includes("design") && st.toLowerCase().includes("creativ")) score+=8;
+    if(career.title.toLowerCase().includes("data") && st.toLowerCase().includes("analyt")) score+=8;
+  });
+  if(profile.goalText.toLowerCase().includes(career.title.split(' ')[0].toLowerCase())) score+=22;
+  if(profile.goalType==='unsure') score=Math.round(score*0.9);
+  score=Math.min(95, 55+score);
+  if(score>88) score=88+Math.floor(Math.random()*5);
+  return score;
+}
+function getRankedCareers(){
+  return careersDB.map(c=>({...c, match:scoreCareer(c)})).sort((a,b)=>b.match-a.match);
+}
+
+// ---------- Dashboard ----------
+function renderDashboard(){
+  document.getElementById('dashName').textContent=profile.name.split(' ')[0];
+  document.getElementById('dashGoal').textContent=profile.goalText;
+  document.getElementById('dashYear').textContent=profile.year + ", " + profile.course + " " + profile.branch;
+  // next best action: find first incomplete roadmap task or missing skill
+  const nextIncomplete=roadmap.find(r=>!r.completed);
+  const topCareer=getRankedCareers()[0];
+  const why = `This closes your biggest gap for ${topCareer.title} (${topCareer.match}% match).`;
+  document.getElementById('nextActionText').textContent = nextIncomplete ? `Complete ${nextIncomplete.title} — ${nextIncomplete.tasks[nextIncomplete.tasksCompleted.indexOf(false)] || nextIncomplete.tasks[0]}` : "Update your portfolio README and apply to 3 internships";
+  document.getElementById('nextActionWhy').textContent="Why: " + why;
+  // progress
+  const completedCount=roadmap.filter(r=>r.completed).length;
+  const pct=Math.round((completedCount/roadmap.length)*100);
+  const overall=Math.min(95, 45+pct*0.4 + profile.skills.length*3);
+  document.getElementById('dashProgressBig').textContent=overall+"%";
+  document.getElementById('topProgress').textContent=overall+"%";
+  document.getElementById('dashProgressLabel').textContent=overall+"% • On track";
+  const offset=263.89 - (263.89*overall/100);
+  document.getElementById('progressCircle').style.strokeDashoffset=offset;
+  document.getElementById('dashRoadmapPct').textContent=pct+"%";
+  document.getElementById('dashRoadmapBar').style.width=pct+"%";
+  const internPct=calcInternReadiness().overall;
+  document.getElementById('dashInternPct').textContent=internPct+"%";
+  document.getElementById('dashInternBar').style.width=internPct+"%";
+  document.getElementById('dashInternReady').textContent=internPct+"% • " + (internPct>75?"Almost ready":"2 steps away");
+  document.getElementById('dashProjectsCount').textContent=profile.projects.length || 3;
+  document.getElementById('dashLearning').textContent= nextIncomplete? nextIncomplete.title : "Portfolio Polish";
+  // skills pills
+  document.getElementById('dashSkills').innerHTML=profile.skills.slice(0,6).map(s=>`<span class="px-2.5 py-1 rounded-full bg-white/10 text-xs font-medium">${s.name}</span>`).join('') || '<span class="text-xs text-white/40">No skills yet</span>';
+  // profile card
+  document.getElementById('profInterests').textContent=profile.interests.slice(0,2).join(', ') || "—";
+  document.getElementById('profSkills').textContent=profile.skills.slice(0,2).map(s=>s.name).join(', ') || "—";
+  document.getElementById('profStrengths').textContent=profile.strengths.slice(0,2).join(', ') || "—";
+  document.getElementById('profGoal').textContent=profile.goalText;
+  const avgSkill=profile.skills.length? Math.round(profile.skills.reduce((a,b)=>a+b.level,0)/profile.skills.length): 35;
+  document.getElementById('profLevel').textContent=avgSkill>70?"Advanced":avgSkill>45?"Intermediate":"Beginner";
+  // career cards
+  const ranked=getRankedCareers().slice(0,3);
+  document.getElementById('dashCareerCards').innerHTML=ranked.map(c=>`
+    <div class="rounded-2xl p-[1px] bg-gradient-to-br from-white/10 to-white/5">
+      <div class="rounded-2xl bg-[#0F172A] p-4 h-full">
+        <div class="flex items-center justify-between"><span class="w-8 h-8 rounded-lg bg-gradient-to-br ${c.color} flex items-center justify-center text-sm">${c.icon}</span><span class="text-xs px-2 py-1 rounded-full bg-emerald-500/15 text-emerald-300 font-bold">${c.match}% match</span></div>
+        <div class="font-semibold text-sm mt-3">${c.title}</div>
+        <div class="text-xs text-white/50 mt-1 line-clamp-2">${c.desc}</div>
+        <button onclick="switchView('career-paths')" class="mt-3 w-full py-2 rounded-full bg-white/10 text-xs font-semibold hover:bg-white/15">View details →</button>
+      </div>
+    </div>
+  `).join('');
+}
+function calcInternReadiness(){
+  const hasProjects=profile.projects.length>0?85:45;
+  const hasSkills=Math.min(90, 40+profile.skills.length*12);
+  const roadmapPct=Math.round(roadmap.filter(r=>r.completed).length/roadmap.length*100);
+  const resume= hasProjects>60 && hasSkills>50 ? 80 : 45;
+  const portfolio= hasProjects>60?65:35;
+  const technical= hasSkills;
+  const projects= hasProjects;
+  const interview= roadmapPct>50?55:30;
+  const overall=Math.round((resume+portfolio+technical+projects+interview)/5);
+  return {resume,portfolio,technical,projects,interview,overall};
+}
+function completeNextAction(){
+  const idx=roadmap.findIndex(r=>!r.completed);
+  if(idx>=0){ roadmap[idx].completed=true; roadmap[idx].tasksCompleted=roadmap[idx].tasksCompleted.map(()=>true); localStorage.setItem('ca_roadmap',JSON.stringify(roadmap)); renderDashboard(); showToast("Marked complete — AI updated your plan ✅"); }
+  else showToast("All caught up! Add a new project to portfolio.");
+}
+
+// ---------- Career Paths ----------
+function renderCareerPaths(){
+  const ranked=getRankedCareers();
+  document.getElementById('careerGrid').innerHTML=ranked.map(c=>{
+    const skillNames=profile.skills.map(s=>s.name.toLowerCase());
+    const known=c.required.filter(r=> skillNames.some(s=> s.includes(r.toLowerCase()) || r.toLowerCase().includes(s)));
+    const missing=c.required.filter(r=> !known.includes(r));
+    return `
+    <div class="glass rounded-2xl p-5 flex flex-col">
+      <div class="flex items-start justify-between gap-3">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br ${c.color} flex items-center justify-center text-xl">${c.icon}</div>
+        <span class="px-2.5 py-1 rounded-full bg-white text-black text-xs font-bold">${c.match}% match</span>
+      </div>
+      <div class="font-semibold mt-3">${c.title}</div>
+      <div class="text-xs text-white/50 mt-1">Why it matches: ${c.tags.filter(t=>profile.interests.includes(t)).slice(0,2).join(', ') || profile.strengths.slice(0,1).join(', ') || 'Aligns with your profile'} • ${profile.goalText.includes(c.title.split(' ')[0])?'Goal-aligned':''}</div>
+      <div class="mt-4 space-y-2 text-xs">
+        <div><span class="text-white/40">Required:</span> <span class="text-white/90">${c.required.join(' • ')}</span></div>
+        <div><span class="text-emerald-300">✓ You have:</span> ${known.length?known.join(', '):'<span class="text-white/30">none yet</span>'}</div>
+        <div><span class="text-amber-300">○ Missing:</span> ${missing.join(', ')}</div>
+      </div>
+      <div class="mt-4 h-1.5 bg-white/10 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r ${c.color} rounded-full" style="width:${c.match}%"></div></div>
+      <button onclick="addCareerToRoadmap('${c.title}')" class="mt-4 w-full py-2.5 rounded-full bg-white text-black text-xs font-semibold">Use this path for roadmap</button>
+      <div class="text-[11px] text-white/30 mt-2">Next step: Learn <b class="text-white/60">${missing[0]||c.required[0]}</b> → build a project</div>
+    </div>
+  `}).join('');
+}
+function addCareerToRoadmap(title){
+  const career=careersDB.find(c=>c.title===title);
+  if(!career) return;
+  // regenerate roadmap focusing on missing skills
+  const missing=career.required.filter(r=> !profile.skills.some(s=> s.name.toLowerCase().includes(r.toLowerCase())));
+  // simple: title replace month 4-5
+  if(missing.length) roadmap[3].title = missing.slice(0,2).join(' + ') + " Mastery";
+  localStorage.setItem('ca_roadmap',JSON.stringify(roadmap));
+  showToast(`Roadmap updated for ${title} ✨`);
+  switchView('roadmap');
+}
+
+// ---------- Skills ----------
+function renderSkillsView(){
+  document.getElementById('skillTopCareer').textContent=getRankedCareers()[0].title;
+  document.getElementById('skillBars').innerHTML=profile.skills.map(s=>`
+    <div>
+      <div class="flex justify-between text-xs"><span class="font-medium">${s.name}</span><span class="text-white/50">${s.level}%</span></div>
+      <div class="h-2 bg-white/10 rounded-full mt-1.5 overflow-hidden"><div class="h-full rounded-full bg-gradient-to-r from-blue-500 to-violet-500" style="width:${s.level}%"></div></div>
+    </div>
+  `).join('') || '<div class="text-sm text-white/40">Add skills in profile setup to see progress.</div>';
+  // to learn
+  const topCareer=getRankedCareers()[0];
+  const toLearn = topCareer.required.map((req,i)=>{
+    const has=profile.skills.some(s=> s.name.toLowerCase().includes(req.toLowerCase()));
+    const level = has? Math.max(10, 70 - i*10): 20 + i*5;
+    return {name:req, priority:i+1, has, level, why: has?"Strengthen this core pillar":"Core requirement for "+topCareer.title, resource: ["Docs + Tutorial","Kaggle Learn","Udemy / Coursera"][i%3], task: i===0?"Build a mini-project":"Complete 5 exercises", project: ["Data Cleaner","Classifier","Dashboard"][i%3]};
+  }).filter(x=>!x.has).slice(0,5);
+  if(toLearn.length===0) toLearn.push({name:"Advanced "+topCareer.required[0], priority:1, has:false, level:20, why:"Go deeper to stand out", resource:"Official docs", task:"Build advanced project", project:"Capstone"});
+  document.getElementById('skillsToLearn').innerHTML=toLearn.map(s=>`
+    <div class="p-3 rounded-xl bg-white/[0.04] border border-white/10">
+      <div class="flex items-center gap-2"><span class="text-xs px-2 py-1 rounded-full ${s.priority===1?'bg-red-500/20 text-red-300':s.priority===2?'bg-amber-500/20 text-amber-300':'bg-white/10 text-white/70'} font-bold">P${s.priority}</span><span class="text-sm font-semibold">${s.name}</span><span class="ml-auto text-xs px-2 py-1 rounded-full bg-white/10">${s.has?'Intermediate':'Beginner'}</span></div>
+      <div class="text-xs text-white/50 mt-1">Why: ${s.why}</div>
+      <div class="text-xs text-white/40 mt-1">Resource: ${s.resource} • Task: ${s.task} • Project: ${s.project}</div>
+      <button onclick="addSkillFromGap('${s.name}')" class="mt-2 text-xs px-3 py-1.5 rounded-full bg-white text-black font-semibold">Add to my skills</button>
+    </div>
+  `).join('');
+}
+function addSkillFromGap(name){
+  if(!profile.skills.find(s=>s.name.toLowerCase()===name.toLowerCase())){
+    profile.skills.push({name, level:15});
+    skills=profile.skills;
+    localStorage.setItem('ca_profile', JSON.stringify(profile));
+    renderSkillsView(); renderDashboard();
+    showToast(`Added ${name} to your skills — update progress as you learn`);
+  } else showToast("You already have this skill");
+}
+
+// ---------- Roadmap ----------
+function renderRoadmap(){
+  const completedCount=roadmap.filter(r=>r.completed).length;
+  document.getElementById('roadmapProgressText').textContent=`${completedCount} of ${roadmap.length} completed • ${Math.round(completedCount/roadmap.length*100)}%`;
+  document.getElementById('roadmapTimeline').innerHTML=roadmap.map((r,i)=>`
+    <div class="relative flex gap-4 pb-6 ${i!==roadmap.length-1?'border-l border-white/10 ml-3':''}">
+      <div class="absolute left-0 w-6 h-6 rounded-full ${r.completed?'bg-emerald-500':'bg-white/10 border border-white/20'} flex items-center justify-center -translate-x-1/2 text-[11px]">${r.completed?'✓':i+1}</div>
+      <div class="ml-8 flex-1 glass rounded-2xl p-4 ${r.completed?'opacity-60':''}">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-[11px] tracking-widest font-bold px-2 py-1 rounded-full ${r.completed?'bg-emerald-500/20 text-emerald-300':'bg-violet-500/20 text-violet-300'}">${r.month}</span>
+          <span class="text-sm font-bold">${r.title}</span>
+          <span class="ml-auto text-xs px-2 py-1 rounded-full ${r.completed?'bg-emerald-500 text-white':'bg-white/10 text-white/60'}">${r.completed?'Completed':'In progress'}</span>
+        </div>
+        <div class="text-xs text-white/50 mt-2">Goal: ${r.goal} • Skills: ${r.skills} • Resources: ${r.resources}</div>
+        <div class="mt-3 space-y-2">
+          ${r.tasks.map((t,ti)=>`
+            <label class="flex items-center gap-2 text-sm ${r.tasksCompleted[ti]?'text-white/40 line-through':''}">
+              <input type="checkbox" ${r.tasksCompleted[ti]?'checked':''} onchange="toggleRoadmapTask(${i},${ti},this.checked)" class="w-4 h-4 rounded accent-violet-600"/>
+              ${t}
+            </label>
+          `).join('')}
+        </div>
+        <div class="mt-3 flex items-center gap-2 text-xs"><span class="px-2 py-1 rounded-full bg-white/10">Project: ${r.project}</span><button onclick="toggleRoadmapComplete(${i})" class="ml-auto px-3 py-1.5 rounded-full ${r.completed?'bg-white/10':'bg-white text-black font-semibold'} text-xs">${r.completed?'Undo':'Mark complete'}</button></div>
+      </div>
+    </div>
+  `).join('');
+}
+function toggleRoadmapTask(mi,ti,checked){
+  roadmap[mi].tasksCompleted[ti]=checked;
+  if(roadmap[mi].tasksCompleted.every(Boolean)) roadmap[mi].completed=true;
+  else roadmap[mi].completed=false;
+  localStorage.setItem('ca_roadmap',JSON.stringify(roadmap));
+  renderRoadmap(); renderDashboard();
+}
+function toggleRoadmapComplete(i){
+  roadmap[i].completed=!roadmap[i].completed;
+  roadmap[i].tasksCompleted=roadmap[i].tasksCompleted.map(()=> roadmap[i].completed);
+  localStorage.setItem('ca_roadmap',JSON.stringify(roadmap));
+  renderRoadmap(); renderDashboard();
+  showToast(roadmap[i].completed?"Step completed 🎉":"Marked incomplete");
+}
+function resetRoadmap(){
+  roadmap=roadmapTemplate.map(r=>({...r,completed:false,tasksCompleted:[false,false,false]}));
+  localStorage.setItem('ca_roadmap',JSON.stringify(roadmap));
+  renderRoadmap(); renderDashboard();
+}
+
+// ---------- Projects ----------
+function renderProjects(){
+  const filter=document.getElementById('projectFilter')?.value || 'all';
+  let list=[...projectsDB];
+  // prioritize top career
+  const top=getRankedCareers()[0].title;
+  list.sort((a,b)=> (a.career===top?-1:1) - (b.career===top?-1:1) );
+  if(filter!=='all') list=list.filter(p=>p.diff===filter);
+  document.getElementById('projectsGrid').innerHTML=list.map(p=>`
+    <div class="glass rounded-2xl p-5 flex flex-col hover:bg-white/[0.06] transition">
+      <div class="flex items-start justify-between gap-2">
+        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-lg">${p.icon}</div>
+        <span class="text-xs px-2 py-1 rounded-full ${p.diff==='Beginner'?'bg-emerald-500/20 text-emerald-300':p.diff==='Intermediate'?'bg-amber-500/20 text-amber-300':'bg-red-500/20 text-red-300'} font-semibold">${p.diff}</span>
+      </div>
+      <div class="font-semibold text-sm mt-3">${p.name}</div>
+      <div class="text-xs text-white/50 mt-1">${p.tech}</div>
+      <div class="text-xs text-white/40 mt-1">Skills: ${p.skills}</div>
+      <div class="flex items-center gap-2 mt-3 text-[11px] text-white/50">
+        <span class="px-2 py-1 rounded-full bg-white/10">⏱ ${p.time}</span>
+        <span class="px-2 py-1 rounded-full bg-white/10">★ ${p.value}</span>
+        <span class="ml-auto text-xs px-2 py-1 rounded-full bg-violet-500/20 text-violet-300">${p.career}</span>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button onclick="viewProject('${p.name}')" class="flex-1 py-2 rounded-full glass text-xs font-semibold">View Project</button>
+        <button onclick="addProjectToRoadmap('${p.name}')" class="flex-1 py-2 rounded-full bg-white text-black text-xs font-semibold">Add to Roadmap</button>
+      </div>
+    </div>
+  `).join('');
+}
+function viewProject(name){
+  const p=projectsDB.find(x=>x.name===name);
+  showToast(`${p.name}: Build with ${p.tech} — great for ${p.career} portfolio`);
+}
+function addProjectToRoadmap(name){
+  const p=projectsDB.find(x=>x.name===name);
+  const idx=roadmap.findIndex(r=>!r.completed);
+  if(idx>=0){ roadmap[idx].project=name; localStorage.setItem('ca_roadmap',JSON.stringify(roadmap)); showToast(`Added "${name}" to ${roadmap[idx].month}`); }
+  else showToast(`Added "${name}" — create a new month for it!`);
+}
+
+// ---------- Portfolio ----------
+function initPortfolio(){
+  document.getElementById('portAbout').value = profile.projects.join(' • ') || `Hi, I'm ${profile.name}, a ${profile.course} ${profile.branch} student passionate about ${profile.interests.slice(0,2).join(' & ')}.`;
+  document.getElementById('portSkills').value = profile.skills.map(s=>s.name).join(', ');
+  document.getElementById('portProjects').value = profile.projects.join('\n') || projectsDB.slice(0,2).map(p=>p.name+' — '+p.tech).join('\n');
+  document.getElementById('portEdu').value = `${profile.course} ${profile.branch}, ${profile.college} • ${profile.year} • Grad ${profile.gradYear}`;
+  document.getElementById('portGoal').value = profile.goalText;
+}
+function aiImprovePortfolio(){
+  let about=document.getElementById('portAbout').value;
+  if(!about.trim()){ showToast("Add some About Me text first"); return; }
+  // improve wording without inventing
+  const improved = about.replace(/\b(i am|i'm)\b/gi, "I am").replace(/\bpassionate\b/gi, "driven and passionate") + " — Focused on building practical, portfolio-ready projects and continuously improving through hands-on learning.";
+  document.getElementById('portAbout').value=improved;
+  showToast("✨ AI polished your wording — no new facts added");
+}
+function generatePortfolioPreview(){
+  const about=document.getElementById('portAbout').value;
+  const skills=document.getElementById('portSkills').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const projects=document.getElementById('portProjects').value.split('\n').filter(Boolean);
+  const edu=document.getElementById('portEdu').value;
+  const goal=document.getElementById('portGoal').value;
+  document.getElementById('portfolioPreview').innerHTML=`
+    <div class="text-center">
+      <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 mx-auto flex items-center justify-center text-xl font-bold">${profile.name[0]}</div>
+      <div class="font-display font-bold text-lg mt-3">${profile.name}</div>
+      <div class="text-sm text-violet-200">${goal}</div>
+      <div class="text-xs text-white/50 mt-1">${edu}</div>
+    </div>
+    <div class="mt-6">
+      <div class="text-xs tracking-widest font-bold text-white/60">ABOUT</div>
+      <div class="text-sm text-white/80 mt-2 leading-relaxed">${about}</div>
+    </div>
+    <div class="mt-6">
+      <div class="text-xs tracking-widest font-bold text-white/60">SKILLS</div>
+      <div class="flex flex-wrap gap-2 mt-2">${skills.map(s=>`<span class="px-3 py-1 rounded-full bg-white/10 text-xs">${s}</span>`).join('')}</div>
+    </div>
+    <div class="mt-6">
+      <div class="text-xs tracking-widest font-bold text-white/60">PROJECTS</div>
+      <div class="grid gap-2 mt-2">${projects.map(p=>`<div class="p-3 rounded-xl bg-white/5 border border-white/10 text-sm">${p}</div>`).join('')}</div>
+    </div>
+    <div class="mt-6 flex gap-2">
+      <a class="flex-1 py-2 rounded-full bg-white text-black text-xs font-semibold text-center">Contact Me</a>
+      <a class="flex-1 py-2 rounded-full bg-violet-600 text-white text-xs font-semibold text-center">GitHub</a>
+    </div>
+  `;
+  showToast("Portfolio preview generated ✨");
+}
+
+// ---------- Resume ----------
+function initResume(){
+  document.getElementById('resPersonal').value=`${profile.name} • ${profile.college} • ${profile.branch}`;
+  document.getElementById('resObjective').value=`Aspiring ${profile.goalText} — ${profile.course} ${profile.branch} student at ${profile.college} (${profile.year}), seeking to apply ${profile.skills.slice(0,3).map(s=>s.name).join(', ')} through hands-on projects and internships.`;
+  document.getElementById('resEdu').value=`${profile.course} ${profile.branch}, ${profile.college} — ${profile.year}, Expected ${profile.gradYear}`;
+  document.getElementById('resSkills').value=profile.skills.map(s=>s.name).join(', ');
+  document.getElementById('resProjects').value=profile.projects.join(' | ') || "Add your projects in Profile";
+  document.getElementById('resIntern').value=profile.internships.join(' | ') || "—";
+  document.getElementById('resCerts').value=[...profile.certs, profile.achievements].filter(Boolean).join(' | ') || "—";
+}
+function generateResume(){
+  const personal=document.getElementById('resPersonal').value;
+  const obj=document.getElementById('resObjective').value || `Motivated ${profile.course} student with strengths in ${profile.strengths.slice(0,2).join(', ')}. Eager to contribute and learn.`;
+  const edu=document.getElementById('resEdu').value;
+  const skills=document.getElementById('resSkills').value;
+  const projs=document.getElementById('resProjects').value;
+  const intern=document.getElementById('resIntern').value;
+  const certs=document.getElementById('resCerts').value;
+  document.getElementById('rName').textContent=profile.name;
+  document.getElementById('rContact').textContent=personal;
+  document.getElementById('rObjective').textContent=obj;
+  document.getElementById('rEdu').textContent=edu;
+  document.getElementById('rSkills').textContent=skills;
+  document.getElementById('rProjects').textContent=projs;
+  document.getElementById('rIntern').textContent=intern;
+  document.getElementById('rCerts').textContent=certs;
+  showToast("Resume generated — edit any section to refine");
+}
+function copyResume(){
+  const txt=document.getElementById('resumePreview').innerText;
+  navigator.clipboard.writeText(txt).then(()=>showToast("Resume copied to clipboard"));
+}
+
+// ---------- Internships ----------
+function renderInternships(){
+  const r=calcInternReadiness();
+  document.getElementById('internReadiness').innerHTML=[
+    {label:'Resume', val:r.resume},{label:'Portfolio', val:r.portfolio},{label:'Technical', val:r.technical},{label:'Projects', val:r.projects},{label:'Interview', val:r.interview}
+  ].map(x=>`
+    <div class="text-center">
+      <div class="relative w-20 h-20 mx-auto">
+        <svg class="w-20 h-20 progress-ring"><circle cx="40" cy="40" r="34" stroke="rgba(255,255,255,0.08)" stroke-width="6" fill="none"/><circle cx="40" cy="40" r="34" stroke="${x.val>70?'#10B981':x.val>50?'#F59E0B':'#EF4444'}" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="${213.6 - 213.6*x.val/100}"/></svg>
+        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm">${x.val}%</div>
+      </div>
+      <div class="text-xs font-semibold mt-2">${x.label}</div>
+    </div>
+  `).join('');
+  const overall=r.overall;
+  document.getElementById('internRecommendation').textContent = overall<60 ? "Build one portfolio-quality project and polish GitHub README." : overall<80 ? "Update resume with recent project & start mock interviews." : "Start applying — target 5 internships this week!";
+  document.getElementById('internChecklist').innerHTML=[
+    {done:r.resume>70, text:"ATS resume with real data"},
+    {done:r.portfolio>60, text:"Portfolio site live"},
+    {done:r.projects>60, text:"2+ GitHub projects with README"},
+    {done:r.technical>60, text:"Core skills ≥60%"},
+    {done:r.interview>50, text:"Mock interview practiced"},
+  ].map(i=>`
+    <label class="flex items-center gap-3 p-3 rounded-xl ${i.done?'bg-emerald-500/10 border border-emerald-500/20':'bg-white/5 border border-white/10'}">
+      <input type="checkbox" ${i.done?'checked':''} class="w-4 h-4 accent-emerald-500"/>
+      <span class="text-sm ${i.done?'text-emerald-200':'text-white/70'}">${i.text}</span>
+      <span class="ml-auto text-xs">${i.done?'✓':''}</span>
+    </label>
+  `).join('');
+}
+
+// ---------- Interview ----------
+const interviewBanks={
+  "Technical Interview":[
+    "Explain the difference between supervised and unsupervised learning.",
+    "What is overfitting and how do you prevent it?",
+    "Explain Python list vs tuple — when would you use each?",
+    "What is a primary key vs foreign key in SQL?",
+    "Describe the bias-variance tradeoff."
+  ],
+  "HR Interview":[
+    "Tell me about yourself and why you chose this career path.",
+    "What are your strengths and how have you used them in a project?",
+    "Describe a challenge you faced and how you overcame it.",
+    "Where do you see yourself in 2 years?",
+    "Why should we hire you for this internship?"
+  ],
+  "Project Interview":[
+    "Walk me through your Student Performance Predictor project — what was your role?",
+    "What was the hardest bug you faced and how did you fix it?",
+    "How did you evaluate your model/website performance?",
+    "If you had one more week, what would you improve?",
+    "How did you collaborate or manage time on this project?"
+  ],
+  "Mock Interview":[
+    "Introduce yourself in 60 seconds with career goal and current skills.",
+    "Explain a recent skill you learned and how you applied it.",
+    "Do you prefer working alone or in a team? Give an example.",
+    "How do you handle learning a completely new technology quickly?",
+    "What questions do you have for us?"
+  ]
+};
+let interviewState={active:false, type:"Technical Interview", questions:[], idx:0, career:"AI/ML Engineer"};
+function initInterview(){
+  document.getElementById('interviewTypes').innerHTML=Object.keys(interviewBanks).map(t=>`
+    <button onclick="selectInterviewType('${t}')" data-itype="${t}" class="px-3 py-2.5 rounded-xl text-xs font-semibold border ${interviewState.type===t?'bg-white text-black border-white':'glass border-white/10 text-white/70'}">${t}</button>
+  `).join('');
+}
+function selectInterviewType(t){
+  interviewState.type=t;
+  initInterview();
+}
+function startInterview(){
+  interviewState.career=document.getElementById('interviewCareer').value;
+  interviewState.type=document.querySelector('[data-itype].bg-white')?.dataset.itype || interviewState.type;
+  // fallback get selected button
+  const sel=[...document.querySelectorAll('[data-itype]')].find(b=>b.classList.contains('bg-white'));
+  if(sel) interviewState.type=sel.dataset.itype;
+  interviewState.questions=[...interviewBanks[interviewState.type]];
+  interviewState.idx=0;
+  interviewState.active=true;
+  document.getElementById('interviewInputArea').classList.remove('hidden');
+  document.getElementById('interviewChat').innerHTML="";
+  askNextInterview();
+}
+function askNextInterview(){
+  if(interviewState.idx>=interviewState.questions.length){
+    addInterviewMsg("ai", `Great session! You completed ${interviewState.questions.length} ${interviewState.type} questions for ${interviewState.career}. Keep practicing daily — consistency beats cramming.`);
+    document.getElementById('interviewInputArea').classList.add('hidden');
+    return;
+  }
+  const q=interviewState.questions[interviewState.idx];
+  addInterviewMsg("ai", `Q${interviewState.idx+1}: ${q}`);
+}
+function addInterviewMsg(role, text){
+  const chat=document.getElementById('interviewChat');
+  const isAi=role==='ai';
+  chat.innerHTML+=`
+    <div class="flex gap-3 ${isAi?'':'justify-end'}">
+      ${isAi?'<div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-xs shrink-0">AI</div>':''}
+      <div class="${isAi?'bg-white/[0.06] border border-white/10':'bg-white text-[#0B1020]'} rounded-2xl px-4 py-3 text-sm max-w-[85%] leading-relaxed">${text}</div>
+    </div>
+  `;
+  chat.scrollTop=chat.scrollHeight;
+}
+function submitInterviewAnswer(){
+  const input=document.getElementById('interviewAnswer');
+  const val=input.value.trim();
+  if(!val) return;
+  addInterviewMsg("user", val);
+  input.value="";
+  // evaluate
+  const feedback = evaluateAnswer(val, interviewState.questions[interviewState.idx]);
+  setTimeout(()=>{
+    addInterviewMsg("ai", feedback);
+    interviewState.idx++;
+    setTimeout(askNextInterview, 900);
+  }, 700);
+}
+document.getElementById('interviewAnswer')?.addEventListener('keydown',e=>{ if(e.key==='Enter') submitInterviewAnswer(); });
+function evaluateAnswer(answer, question){
+  const len=answer.split(' ').length;
+  let accuracy = len>40?"Good depth":len>15?"Decent, add an example":"Too brief — expand with an example";
+  let comm = answer.includes('.') && len>20 ? "Clear structure" : "Work on concise sentences";
+  let tech = /python|model|data|api|algorithm|database/i.test(answer) ? "Shows technical awareness" : "Add a technical detail or tool name";
+  let confidence = len>25 ? "Confident tone" : "Add more specifics to sound confident";
+  let missing = len<25 ? "Add STAR: Situation-Task-Action-Result" : "Consider quantifying impact (e.g., 'improved accuracy by 12%')";
+  return `
+    <div class="space-y-2">
+      <div class="font-semibold text-xs tracking-widest">FEEDBACK</div>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <div class="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20"><b>Accuracy:</b> ${accuracy}</div>
+        <div class="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20"><b>Communication:</b> ${comm}</div>
+        <div class="p-2 rounded-xl bg-violet-500/10 border border-violet-500/20"><b>Technical:</b> ${tech}</div>
+        <div class="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20"><b>Confidence:</b> ${confidence}</div>
+      </div>
+      <div class="text-xs text-white/70"><b>Missing points:</b> ${missing}</div>
+      <div class="text-xs text-white/50">Tip: For "${question.slice(0,50)}..." — answer with a concrete example from your projects.</div>
+    </div>
+  `;
+}
+
+// ---------- AI Mentor Chat ----------
+let chatHistory=[];
+function initChat(){
+  if(chatHistory.length===0){
+    chatHistory=[
+      {role:'ai', text:`Hi ${profile.name.split(' ')[0]}! I'm your AI Career Mentor. I know you're a ${profile.year} ${profile.branch} student aiming for ${profile.goalText}. Ask me anything — I'll personalize every answer to your profile.`}
+    ];
+  }
+  renderChat();
+  renderChatContext();
+  renderChatQuick();
+}
+function renderChat(){
+  const c=document.getElementById('chatMessages');
+  c.innerHTML=chatHistory.map(m=>`
+    <div class="flex gap-3 ${m.role==='user'?'justify-end':''}">
+      ${m.role==='ai'?'<div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center text-xs shrink-0">AI</div>':''}
+      <div class="${m.role==='ai'?'glass':'bg-white text-black'} rounded-2xl px-4 py-3 text-sm max-w-[82%] leading-relaxed whitespace-pre-wrap">${m.text}</div>
+    </div>
+  `).join('');
+  c.scrollTop=c.scrollHeight;
+}
+function renderChatContext(){
+  document.getElementById('chatContext').innerHTML=`
+    <div class="flex justify-between"><span class="text-white/50">Goal</span><span class="font-medium">${profile.goalText}</span></div>
+    <div class="flex justify-between"><span class="text-white/50">Skills</span><span class="font-medium">${profile.skills.slice(0,3).map(s=>s.name).join(', ')||'—'}</span></div>
+    <div class="flex justify-between"><span class="text-white/50">Roadmap</span><span class="font-medium">${roadmap.filter(r=>r.completed).length}/${roadmap.length} done</span></div>
+    <div class="flex justify-between"><span class="text-white/50">Internship</span><span class="font-medium">${calcInternReadiness().overall}% ready</span></div>
+  `;
+}
+function renderChatQuick(){
+  const qs=["Should I learn Python or Java?","What should I do this week?","How can I improve my resume?","Which projects should I build?"];
+  document.getElementById('chatQuick').innerHTML=qs.map(q=>`<button onclick="quickAsk('${q}')" class="px-3 py-1.5 rounded-full glass text-xs hover:bg-white/10">${q}</button>`).join('');
+}
+function quickAsk(q){ document.getElementById('chatInput').value=q; sendChat(); }
+function sendChat(){
+  const input=document.getElementById('chatInput');
+  const val=input.value.trim();
+  if(!val) return;
+  chatHistory.push({role:'user', text:val});
+  input.value="";
+  renderChat();
+  setTimeout(()=>{
+    const reply=generateAIReply(val);
+    chatHistory.push({role:'ai', text:reply});
+    renderChat();
+  }, 700);
+}
+document.getElementById('chatInput').addEventListener('keydown',e=>{ if(e.key==='Enter') sendChat(); });
+
+function generateAIReply(q){
+  const lower=q.toLowerCase();
+  const top=getRankedCareers()[0].title;
+  const next=roadmap.find(r=>!r.completed)?.title || "Portfolio Polish";
+  if(lower.includes("python") && lower.includes("java")){
+    return `For your goal of ${profile.goalText}, **Python is the better next step** — it directly maps to ${top} and your interest in ${profile.interests.slice(0,2).join(', ')}.\n\nWhy Python now:\n• Required for your top match (${top})\n• You already have ${profile.skills.length?profile.skills[0].name:'some coding exposure'} — Python builds on that fast\n• More portfolio projects available at your level\n\nNext: Finish “${next}” then build “Student Performance Predictor” (Beginner, 1 week). Java can wait until you target backend-heavy roles.`;
+  }
+  if(lower.includes("after python") || lower.includes("what next") || lower.includes("what should i learn")){
+    const missing=getRankedCareers()[0].required.filter(r=> !profile.skills.some(s=> s.name.toLowerCase().includes(r.toLowerCase()))).slice(0,3).join(', ');
+    return `Great — you’re on track! Since you know Python basics, here’s your **personalized next 2 weeks** for ${top}:\n\n**Week 1:** ${missing || "Statistics + Pandas"} — focus on one core gap\n**Week 2:** Build a small project that uses it (e.g., “Sales Dashboard” if Data track)\n\nWhy this order? Our gap analysis shows ${missing || "advanced Python"} is your highest-priority missing skill. Resources: Kaggle Learn (free) + official docs. Task: 5 exercises/day + one end-of-week project.\n\nWant me to add the project to your roadmap?`;
+  }
+  if(lower.includes("project")){
+    return `Based on your ${profile.goalText} goal and ${profile.skills.map(s=>s.name).join(', ') || 'current skills'}, I recommend these **in order**:\n\n1. **Student Performance Predictor** (Beginner) — solidifies Python+Pandas+ML basics — High portfolio value\n2. **Sales Dashboard** (Beginner) — shows SQL + visualization — great for interviews\n3. **AI Chatbot** (Intermediate) — once you finish ML fundamentals\n\nYour Next Best Action is: “Complete ${next}” — that unlocks #1 smoothly. Shall I add it to your roadmap?`;
+  }
+  if(lower.includes("resume")){
+    return `Your resume should only use **real information** you provided — we never invent experience.\n\nTo improve yours:\n• Keep your objective specific to ${profile.goalText}\n• Quantify projects: “Built Student Predictor — 82% accuracy, deployed on Streamlit”\n• List skills as: ${profile.skills.slice(0,4).map(s=>s.name).join(', ') || 'Python, Git, etc.'}\n• Achievements: ${profile.achievements || 'Add any hackathon/award — even small wins count'}\n\nOpen **Resume Builder → Generate with AI** to get an ATS-friendly draft you can edit.`;
+  }
+  if(lower.includes("internship") || lower.includes("ready")){
+    const r=calcInternReadiness();
+    return `**Internship Readiness: ${r.overall}%**\nResume ${r.resume}% • Portfolio ${r.portfolio}% • Tech ${r.technical}% • Projects ${r.projects}% • Interview ${r.interview}%\n\nYour #1 blocker: ${r.portfolio<60?'Portfolio ('+r.portfolio+'%) — ship one polished project with a great README':'Technical depth — strengthen your weakest required skill'}\n\nRecommended next step: **${r.overall<60?'Complete one portfolio-quality project and update GitHub README':'Do 2 mock interviews this week and refine resume bullets with metrics'}** — this moves you +10-15%.`;
+  }
+  if(lower.includes("interview")){
+    return `For **${profile.goalText}** interviews, practice in this order:\n1. **Project interview** — you’ll be asked to walk through ${profile.projects[0]||'your best project'} in detail\n2. **Technical** — ${getRankedCareers()[0].required.slice(0,2).join(' & ')} fundamentals\n3. **HR** — STAR stories for teamwork & challenges\n\nTry **Interview Coach → Project Interview (Beginner)** — I’ll ask one question at a time and give feedback on accuracy, communication & missing points. Ready to start?`;
+  }
+  if(lower.includes("this week") || lower.includes("weekly")){
+    return `**Your focus this week (${profile.year}, ${profile.branch}):**\n• **Main:** ${next} — complete all 3 checklist tasks\n• **Daily:** 30 min hands-on + 15 min revision\n• **Deliverable:** One GitHub commit/day with clear messages\n\nWhy this? It directly closes your biggest gap for ${top}. Track it in **Roadmap** — check boxes as you go and I’ll adapt your plan. You’ve got this!`;
+  }
+  // fallback generic mentor
+  return `Great question! Considering your profile — **${profile.name}, ${profile.course} ${profile.branch}, goal: ${profile.goalText}**, interests: ${profile.interests.slice(0,3).join(', ')} — here’s my tailored take:\n\n${lower.length>10? "Focus on one missing core skill at a time rather than jumping broadly. Your Next Best Action is: **"+roadmap.find(r=>!r.completed)?.title+"** — that’s the highest-leverage step for your "+top+" path.":"Tell me a bit more — e.g., which career or skill you’re deciding between — and I’ll give a concrete, sequenced plan with resources and a project."}\n\n*Remember: I adapt to your progress, explain why each step matters, and never promise guaranteed placements.*`;
+}
+
+// ---------- Profile ----------
+function renderProfileView(){
+  document.getElementById('editName').value=profile.name;
+  document.getElementById('editCollege').value=profile.college;
+  document.getElementById('editBranch').value=profile.branch;
+  document.getElementById('editYear').value=profile.year;
+  document.getElementById('editGoal').value=profile.goalText;
+  document.getElementById('profileSummaryName').textContent=profile.name + " • " + profile.course;
+  document.getElementById('profileSummaryDetail').textContent=profile.college + " • " + profile.branch + " • " + profile.interests.join(', ');
+}
+function saveProfileEdits(){
+  profile.name=document.getElementById('editName').value.trim()||profile.name;
+  profile.college=document.getElementById('editCollege').value.trim()||profile.college;
+  profile.branch=document.getElementById('editBranch').value.trim()||profile.branch;
+  profile.year=document.getElementById('editYear').value.trim()||profile.year;
+  profile.goalText=document.getElementById('editGoal').value.trim()||profile.goalText;
+  localStorage.setItem('ca_profile',JSON.stringify(profile));
+  buildSidebar(); renderDashboard(); showToast("Profile updated");
+}
+function resetAllData(){
+  if(confirm("Reset all data and return to landing?")){
+    localStorage.removeItem('ca_profile'); localStorage.removeItem('ca_roadmap');
+    location.reload();
+  }
+}
+function openProfileSettings(){ switchView('profile'); }
+
+// ---------- Init on load ----------
+document.addEventListener('DOMContentLoaded', ()=>{
+  lucide.createIcons();
+  // try load
+  const p=localStorage.getItem('ca_profile');
+  if(p){ profile=JSON.parse(p); skills=profile.skills||[]; selectedInterests=new Set(profile.interests||[]); strengths=new Set(profile.strengths||[]); roadmap=JSON.parse(localStorage.getItem('ca_roadmap')||'[]'); initApp(); }
+  else {
+    // show landing
+    document.getElementById('landingView').classList.remove('hidden');
+  }
+  renderInterests(); renderSkills(); renderStrengths(); renderStrengthQuick();
+});
+</script>
+</body>
+</html>
